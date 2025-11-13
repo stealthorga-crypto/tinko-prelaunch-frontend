@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+  
+[build.environment]
+  NODE_VERSION = "18"
+
+# Form settings
+[[plugins]]
+  package = "@netlify/plugin-form-submissions"
+
+# Redirect rules for clean URLs
+[[redirects]]
+  from = "/thank-you.html"
+  to = "/thank-you"
+  status = 200
