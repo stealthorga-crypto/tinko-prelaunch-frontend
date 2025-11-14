@@ -128,34 +128,136 @@
 </div>
 </div>
 </section>
-<section class="bg-white dark:bg-background-dark px-4 py-6" id="signup">
-<div class="flex flex-col gap-4 text-center items-center rounded-lg bg-background-light dark:bg-gray-900/50 p-6">
+<section class="bg-white dark:bg-background-dark px-4 py-12" id="signup">
+<div class="max-w-2xl mx-auto">
   
   <!-- Success/Error Messages -->
-  <div id="form-messages" style="display: none;" class="w-full max-w-sm mb-4">
-    <div id="success-message" class="hidden bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
-      <span class="font-medium">🎉 Success!</span> Thanks! You're on the waitlist.
+  <div id="form-messages" style="display: none;" class="w-full mb-6">
+    <div id="success-message" class="hidden bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl text-center">
+      <div class="flex items-center justify-center mb-2">
+        <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="font-semibold text-lg">You're in!</span>
+      </div>
+      <p class="text-green-700">We'll notify you when early access opens.</p>
     </div>
-    <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
-      <span class="font-medium">⚠️ Error:</span> Please try again.
+    <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-xl text-center">
+      <span class="font-medium">⚠️ Oops!</span> Something went wrong. Please try again.
     </div>
   </div>
 
-<h2 class="text-2xl font-bold tracking-tight text-[#111813] dark:text-white">Join the Waitlist</h2>
-<p class="text-[#111813] dark:text-white">Be the first to know when <span style="color: #F4511E;">Tinko</span> launches. Get early access and exclusive offers.</p>
+  <!-- Form Card -->
+  <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 md:p-12">
+    
+    <!-- Headline -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-black text-[#111813] dark:text-white mb-4 leading-tight">
+        Lost Sales? <span style="color: #F4511E;">Tinko</span> Finds.
+      </h1>
+      <p class="text-xl text-[#608a6e] dark:text-gray-300 mb-8 leading-relaxed">
+        Recover missed payments instantly with AI-driven retry & smart checkout links.
+      </p>
+      
+      <!-- Benefits List -->
+      <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8 mb-10">
+        <div class="flex items-center text-[#111813] dark:text-white">
+          <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-sm md:text-base">Recover failed payments automatically</span>
+        </div>
+        <div class="flex items-center text-[#111813] dark:text-white">
+          <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-sm md:text-base">Boost sales without extra marketing spend</span>
+        </div>
+        <div class="flex items-center text-[#111813] dark:text-white">
+          <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-sm md:text-base">Works with Razorpay, Stripe, CCAvenue</span>
+        </div>
+      </div>
+    </div>
 
-<!-- Netlify Form -->
-<form name="tinko-waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" class="w-full max-w-sm flex flex-col sm:flex-row gap-3 mt-4">
-  <!-- Hidden fields for Netlify -->
-  <input type="hidden" name="form-name" value="tinko-waitlist" />
-  <input type="hidden" name="bot-field" style="display: none;" />
-  
-  <label class="sr-only" for="email">Email address</label>
-  <input id="email" name="email" class="flex-grow appearance-none rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-background-dark px-4 py-2.5 text-[#111813] dark:text-white placeholder:text-[#111813] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Enter your email" required type="email"/>
-  <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-5 bg-primary text-[#111813] text-sm font-bold leading-normal tracking-[0.015em]" type="submit">
-    <span class="truncate">Get Early Access</span>
-  </button>
-</form>
+    <!-- Signup Form -->
+    <form name="tinko-waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" class="space-y-6">
+      
+      <!-- Hidden fields for Netlify -->
+      <input type="hidden" name="form-name" value="tinko-waitlist" />
+      <input type="hidden" name="bot-field" style="display: none;" />
+      
+      <!-- Full Name (Optional) -->
+      <div>
+        <label for="fullname" class="block text-sm font-medium text-[#111813] dark:text-white mb-2">
+          Full Name <span class="text-[#608a6e] text-xs">(optional)</span>
+        </label>
+        <input 
+          id="fullname" 
+          name="fullname" 
+          type="text"
+          class="w-full appearance-none rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3.5 text-[#111813] dark:text-white placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
+          placeholder="Your full name"
+        />
+      </div>
+
+      <!-- Email Address (Required) -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-[#111813] dark:text-white mb-2">
+          Email Address <span class="text-red-500">*</span>
+        </label>
+        <input 
+          id="email" 
+          name="email" 
+          type="email"
+          required
+          class="w-full appearance-none rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3.5 text-[#111813] dark:text-white placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
+          placeholder="your.email@company.com"
+        />
+      </div>
+
+      <!-- Business Size -->
+      <div>
+        <label for="business-size" class="block text-sm font-medium text-[#111813] dark:text-white mb-2">
+          Monthly Order Volume <span class="text-red-500">*</span>
+        </label>
+        <select 
+          id="business-size" 
+          name="business-size"
+          required
+          class="w-full appearance-none rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3.5 text-[#111813] dark:text-white focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
+        >
+          <option value="">Select your monthly order volume</option>
+          <option value="less-than-100">Less than 100 monthly orders</option>
+          <option value="100-1000">100–1000 monthly orders</option>
+          <option value="1000-plus">1000+ monthly orders</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button 
+          type="submit"
+          class="w-full flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary/90 text-[#111813] font-bold text-lg rounded-xl transition-colors duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+        >
+          <span>Get Early Access</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Privacy Notice -->
+      <div class="text-center pt-4">
+        <p class="text-xs text-[#608a6e] dark:text-gray-400">
+          By joining, you agree to receive early-access updates. No spam.
+        </p>
+      </div>
+
+    </form>
+  </div>
 </div>
 </section>
 </main>
