@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Tinko Pre-Launch Landing Page
 
 🚀 **Lost Sales? Tinko Finds.**
@@ -41,3 +42,7 @@ This site is deployed on Netlify with automatic deployments from the main branch
 ---
 
 © 2024 Blocks and Loops. All rights reserved.
+=======
+# tinko-landing
+Official early access landing page for TINKO — Real-time payment failure intelligence that saves lost revenue.
+>>>>>>> 91cee8e7181a44c6b5239021b9cc0fa10ab63f3f
