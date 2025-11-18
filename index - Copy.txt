@@ -30,14 +30,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cofo+Sans+Mono:wght@400;500;600;700&display=swap');
         
+        /* Clean, professional page background */
         body {
             margin: 0;
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             font-family: "Plus Jakarta Sans", sans-serif;
         }
         
+        /* TINKO Logo styling - your signature deep orange */
         .tinko-logo {
-            color: #DE6B06;
+            color: #DE6B06; /* deep orange for brand recognition */
             font-style: normal;
             font-size: 2.5rem;
             letter-spacing: 0.08em;
@@ -61,20 +63,18 @@
             text-transform: uppercase;
         }
         
+        /* Hero section with strategic orange accent */
         .hero-gradient {
             background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
         }
         
+        /* Professional card styling */
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(222, 107, 6, 0.1);
         }
-
-        .glass-card-dark {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
+    </style>
     </style>
 </head>
 <body class="bg-gray-50 font-jakarta text-gray-900">
@@ -98,6 +98,7 @@
                         Real-time payment failure intelligence at your fingertips.
                     </p>
                     
+                    <!-- Simple CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
                         <a href="#signup" class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-xl font-bold text-xl transition-all duration-200 transform hover:scale-105 inline-flex items-center shadow-lg">
                             Get Early Access
@@ -192,7 +193,9 @@
                         </p>
                     </div>
                     
+                    <!-- Simple Flow Chart -->
                     <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
+                        <!-- Step 1 -->
                         <div class="text-center">
                             <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span class="text-white font-bold text-xl">1</span>
@@ -201,12 +204,14 @@
                             <p class="text-gray-600 text-sm">Customer payment fails</p>
                         </div>
                         
+                        <!-- Arrow -->
                         <div class="hidden md:block">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
                         </div>
                         
+                        <!-- Step 2 -->
                         <div class="text-center">
                             <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span class="text-white font-bold text-xl">2</span>
@@ -215,12 +220,14 @@
                             <p class="text-gray-600 text-sm">TINKO detects instantly</p>
                         </div>
                         
+                        <!-- Arrow -->
                         <div class="hidden md:block">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
                         </div>
                         
+                        <!-- Step 3 -->
                         <div class="text-center">
                             <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span class="text-white font-bold text-xl">3</span>
@@ -229,12 +236,14 @@
                             <p class="text-gray-600 text-sm">Sends retry link</p>
                         </div>
                         
+                        <!-- Arrow -->
                         <div class="hidden md:block">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
                         </div>
                         
+                        <!-- Step 4 -->
                         <div class="text-center">
                             <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span class="text-white font-bold text-xl">4</span>
@@ -246,7 +255,7 @@
                 </div>
             </section>
 
-            <!-- Signup Section -->
+            <!-- Simple Signup Section -->
             <section class="px-4 py-24 bg-gradient-to-br from-gray-900 to-gray-800" id="signup">
                 <div class="max-w-4xl mx-auto text-center">
                     <h2 class="text-white text-4xl lg:text-5xl font-bold leading-tight mb-6">
@@ -256,6 +265,7 @@
                         Join the waitlist to be the first to access <span class="tinko-text">TINKO</span> when we launch
                     </p>
                     
+                    <!-- Simple Signup Form -->
                     <div class="max-w-md mx-auto mb-12">
                         <form method="POST" data-netlify="true" name="early-access" class="space-y-6">
                             <input type="hidden" name="form-name" value="early-access" />
@@ -288,6 +298,7 @@
                         </p>
                     </div>
                     
+                    <!-- Contact Information -->
                     <div class="glass-card-dark rounded-xl p-6 border border-white/10 max-w-lg mx-auto">
                         <p class="text-gray-300 mb-4">
                             Questions? Email us directly:
@@ -311,6 +322,7 @@
                         <h3 class="tinko-brand text-3xl font-black leading-tight">TINKO</h3>
                     </div>
                     
+                    <!-- Social Media Icons -->
                     <div class="flex gap-8">
                         <a class="text-gray-400 hover:text-orange-400 transition-colors p-3 bg-gray-800 rounded-full hover:bg-gray-700" href="#" aria-label="Facebook">
                             <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -334,11 +346,13 @@
                         </a>
                     </div>
                     
+                    <!-- Footer Links -->
                     <div class="flex gap-8 text-gray-400">
                         <a class="hover:text-orange-400 transition-colors font-medium" href="#signup">Contact</a>
                         <a class="hover:text-orange-400 transition-colors font-medium" href="privacy-policy.html">Privacy Policy</a>
                     </div>
                     
+                    <!-- Copyright -->
                     <p class="text-sm text-gray-500 text-center">© 2024 <span class="text-white font-semibold">Blocks and Loops</span>. All rights reserved.</p>
                 </div>
             </div>
