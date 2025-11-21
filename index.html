@@ -257,7 +257,7 @@
                     </p>
                     
                     <div class="max-w-md mx-auto mb-12">
-                        <form method="POST" data-netlify="true" name="early-access" class="space-y-6">
+                        <form id="tinkoEarlyAccessForm" class="space-y-6">
                             <input type="hidden" name="form-name" value="early-access" />
                             
                             <div class="flex flex-col gap-4">
@@ -344,5 +344,34 @@
             </div>
         </footer>
     </div>
+    <script>
+document.getElementById("tinkoEarlyAccessForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.querySelector('input[name="email"]').value;
+    const company = form.querySelector('input[name="company"]').value;
+
+    try {
+        const response = await fetch("http://localhost:8000/v1/early-access/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, company })
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to submit");
+        }
+
+        alert("Thank you! We'll notify you soon.");
+        form.reset();
+
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Please try again.");
+    }
+});
+</script>
+
 </body>
 </html>
