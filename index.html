@@ -58,9 +58,8 @@
   </h1>
 
   <p class="max-w-2xl text-lg text-tinko-muted mb-10">
-    Every failed payment is lost intent — 
+    Every failed payment is lost intent —
     Tinko detects failures instantly and brings them back with a clean retry link sent through trusted channels.
-
   </p>
 
   <div class="flex flex-col sm:flex-row gap-4">
@@ -97,9 +96,9 @@
       The last step of your funnel is silently leaking money.
     </h2>
     <p class="max-w-3xl text-lg text-tinko-muted mb-12">
-      You spent on ads, design, product, logistics.  
-      The customer reached checkout. They clicked pay.  
-      Then something breaks — OTP timeout, network issue, bank decline, gateway errors.  
+      You spent on ads, design, product, logistics.
+      The customer reached checkout. They clicked pay.
+      Then something breaks — OTP timeout, network issue, bank decline, gateway errors.
       And they simply leave.
     </p>
 
@@ -127,7 +126,7 @@
 
     <div>
       <h2 class="text-3xl md:text-4xl font-bold mb-6">
-        Tinko catches the drop —  
+        Tinko catches the drop —
         <span class="text-tinko-orange">and brings the sale back.</span>
       </h2>
 
@@ -226,21 +225,6 @@
 </section>
 
 
-<!--
-<section class="bg-white py-20 border-y border-gray-200">
-  <div class="max-w-6xl mx-auto px-4 text-center">
-    <p class="uppercase tracking-[0.22em] text-tinko-muted text-xs mb-8">
-      TRUSTED BY MODERN BUSINESSES
-    </p>
-    <div class="opacity-40 text-tinko-muted text-sm">
-      (Placeholder for logos — add once we have partners)
-    </div>
-  </div>
-</section>
--->
-
-
-
 <!-- SIGNUP -->
 <section id="signup" class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
   <div class="max-w-6xl mx-auto px-4 text-center">
@@ -251,18 +235,56 @@
     </p>
 
     <div class="max-w-lg mx-auto">
-      <form class="space-y-4" action="https://formsubmit.co/contact@tinko.in" method="POST">
+      <form id="earlyAccessForm" class="space-y-4">
 
-        <input type="hidden" name="_subject" value="Tinko — Early Access Request"/>
-        <input type="hidden" name="_captcha" value="false"/>
-        <input type="hidden" name="_template" value="table"/>
-        <input type="hidden" name="_next" value="https://tinko.in/thank-you.html"/>
+        <input
+          id="name"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+          required
+          placeholder="Your name"
+        />
 
-        <input class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500" name="name" required placeholder="Your name"/>
-        <input class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500" name="email" type="email" required placeholder="Work email"/>
-        <input class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500" name="company" placeholder="Company (optional)"/>
+        <input
+          id="email"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+          type="email"
+          required
+          placeholder="Work email"
+        />
 
-        <button class="w-full bg-tinko-orange hover:bg-orange-600 py-3 rounded-lg font-semibold shadow-lg">
+        <input
+          id="company"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+          placeholder="Company"
+        />
+
+        <input
+          id="business"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+          placeholder="Business type (Ecom / SaaS / Courses / Others)"
+        />
+
+        <select
+          id="monthly_sales"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white"
+        >
+          <option value="">Monthly sales volume</option>
+          <option value="0-100">0 – 100 orders</option>
+          <option value="100-500">100 – 500 orders</option>
+          <option value="500-2000">500 – 2000 orders</option>
+          <option value="2000+">2000+ orders</option>
+        </select>
+
+        <input
+          id="product_type"
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+          placeholder="What do you sell? (Shoes, apparel, courses, etc.)"
+        />
+
+        <button
+          type="submit"
+          class="w-full bg-tinko-orange hover:bg-orange-600 py-3 rounded-lg font-semibold shadow-lg"
+        >
           Join Early Access
         </button>
 
@@ -289,6 +311,39 @@
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<script>
+document.getElementById("earlyAccessForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const payload = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        company: document.getElementById("company").value,
+        business: document.getElementById("business").value,
+        monthly_sales: document.getElementById("monthly_sales").value,
+        product_type: document.getElementById("product_type").value
+    };
+
+    try {
+        const res = await fetch("http://127.0.0.1:8010/v1/early-access/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            alert("Thank you! You're in. 😊 Check your email.");
+        } else {
+            alert("Something went wrong. Please try again.");
+        }
+    } catch (err) {
+        alert("Backend not reachable. Ensure API is running.");
+    }
+});
 </script>
 
 </body>
