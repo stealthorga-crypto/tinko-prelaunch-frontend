@@ -36,7 +36,7 @@ if (sendOtpBtn) {
     sendOtpBtn.textContent = "Sending...";
 
     try {
-      const res = await fetch(`${API_BASE}/v1/auth/auth/otp/send`, {
+      const res = await fetch(`${API_BASE}/v1/auth/v1/auth/email/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -74,7 +74,7 @@ if (verifyOtpBtn) {
     verifyOtpBtn.textContent = "Verifying...";
 
     try {
-      const res = await fetch(`${API_BASE}/v1/auth/auth/otp/verify`, {
+      const res = await fetch(`${API_BASE}/v1/auth/v1/auth/email/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
