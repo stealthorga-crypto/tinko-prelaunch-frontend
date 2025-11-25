@@ -1,63 +1,107 @@
-const API_BASE = "http://127.0.0.1:8010";
+// auth.js
 
-async function sendOTP() {
-    const email = document.getElementById("auth-email").value;
+const API_BASE = "https://tinko-clean-backend.onrender.com"; 
+// change if you deploy backend somewhere else
 
-    document.getElementById("otp-section").classList.add("hidden");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
 
-    const res = await fetch(`${API_BASE}/v1/auth/email/send-otp`, {
+const emailInput = document.getElementById("login_email");
+const otpInput = document.getElementById("otp_code");
+const loginMessage = document.getElementById("loginMessage");
+
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+const resendOtp = document.getElementById("resendOtp");
+
+function setMessage(msg, isError = false) {
+  if (!loginMessage) return;
+  loginMessage.textContent = msg;
+  loginMessage.className = isError
+    ? "text-sm text-red-400 mt-2"
+    : "text-sm text-emerald-300 mt-2";
+}
+
+// SEND OTP
+if (sendOtpBtn) {
+  sendOtpBtn.addEventListener("click", async () => {
+    const email = (emailInput?.value || "").trim();
+
+    if (!email) {
+      alert("Enter a valid email");
+      return;
+    }
+
+    sendOtpBtn.disabled = true;
+    sendOtpBtn.textContent = "Sending...";
+
+    try {
+      const res = await fetch(`${API_BASE}/v1/auth/auth/otp/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
-    });
+      });
 
-    const data = await res.json();
-
-    if (res.ok) {
-        alert("OTP sent! Check email.");
-        document.getElementById("otp-section").classList.remove("hidden");
-    } else {
-        alert("Error: " + data.detail);
+      if (res.ok) {
+        setMessage("OTP sent to your email.");
+        step1.classList.add("hidden");
+        step2.classList.remove("hidden");
+      } else {
+        setMessage("Failed to send OTP. Please try again.", true);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Backend unreachable. Check API.", true);
+    } finally {
+      sendOtpBtn.disabled = false;
+      sendOtpBtn.textContent = "Send OTP";
     }
+  });
 }
 
-async function verifyOTP() {
-    const email = document.getElementById("auth-email").value;
-    const otp = document.getElementById("auth-otp").value;
+// VERIFY OTP
+if (verifyOtpBtn) {
+  verifyOtpBtn.addEventListener("click", async () => {
+    const otp = (otpInput?.value || "").trim();
+    const email = (emailInput?.value || "").trim();
 
-    const res = await fetch(`${API_BASE}/v1/auth/email/verify-otp`, {
+    if (!otp) {
+      alert("Enter OTP");
+      return;
+    }
+
+    verifyOtpBtn.disabled = true;
+    verifyOtpBtn.textContent = "Verifying...";
+
+    try {
+      const res = await fetch(`${API_BASE}/v1/auth/auth/otp/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
-    });
+      });
 
-    const data = await res.json();
-
-    if (data.access_token) {
-        localStorage.setItem("tinko_token", data.access_token);
-        alert("Logged in successfully!");
-        closeAuthModal();
-    } else {
-        alert("Error: " + data.detail);
+      if (res.ok) {
+        setMessage("Login successful! Redirecting...");
+        // TODO: change to your real dashboard route
+        window.location.href = "/dashboard.html";
+      } else {
+        setMessage("Invalid OTP. Please try again.", true);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Backend unreachable. Check API.", true);
+    } finally {
+      verifyOtpBtn.disabled = false;
+      verifyOtpBtn.textContent = "Verify OTP";
     }
+  });
 }
 
-async function getProfile() {
-    const token = localStorage.getItem("tinko_token");
-
-    const res = await fetch(`${API_BASE}/v1/profile/me`, {
-        headers: { "Authorization": "Bearer " + token }
-    });
-
-    const data = await res.json();
-    alert(JSON.stringify(data, null, 2));
-}
-
-
-// Modal Controls
-function openAuthModal() {
-    document.getElementById("auth-modal").classList.remove("hidden");
-}
-function closeAuthModal() {
-    document.getElementById("auth-modal").classList.add("hidden");
+// RESEND OTP
+if (resendOtp) {
+  resendOtp.addEventListener("click", () => {
+    if (sendOtpBtn) {
+      sendOtpBtn.click();
+    }
+  });
 }
