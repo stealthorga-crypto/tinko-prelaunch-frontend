@@ -289,286 +289,272 @@
           <div>
             <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Billing Email</label>
             <input type="email" id="billingEmail" class="input-field">
-          </div>
 
-          <div class="pt-4">
-            <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="termsCheck" class="w-5 h-5 accent-tinko-orange">
-              <span class="text-sm text-slate-300">I accept the <a href="#" class="text-tinko-orange">Terms of
-                  Service</a> & Privacy Policy.</span>
-            </label>
-          </div>
-        </div>
-      </div>
+            <!-- NAVIGATION BUTTONS -->
+            <div
+              class="fixed bottom-0 left-0 md:left-64 right-0 md:right-[400px] bg-slate-900 border-t border-slate-800 p-4 flex justify-between items-center z-50">
+              <button id="prevBtn" onclick="changeStep(-1)" class="text-slate-400 hover:text-white px-4 py-2 hidden">←
+                Back</button>
+              <button id="nextBtn" onclick="changeStep(1)"
+                class="bg-tinko-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg ml-auto">Next
+                Step →</button>
+              const totalSteps = 7;
+              const selectedGateways = new Set();
+              const GATEWAYS = ["Razorpay", "Stripe", "Cashfree", "PayU", "PhonePe", "Paytm", "CCAvenue", "Juspay",
+              "Custom
+              Gateway (Not listed here?)"];
+              let previewMode = 'whatsapp';
 
-      <!-- NAVIGATION BUTTONS -->
-      <div
-        class="fixed bottom-0 left-0 md:left-64 right-0 md:right-[400px] bg-slate-900 border-t border-slate-800 p-4 flex justify-between items-center z-50">
-        <button id="prevBtn" onclick="changeStep(-1)" class="text-slate-400 hover:text-white px-4 py-2 hidden">←
-          Back</button>
-        <button id="nextBtn" onclick="changeStep(1)"
-          class="bg-tinko-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg ml-auto">Next
-          Step →</button>
-      </div>
+              // ------------------------------------------------------
+              // INIT
+              // ------------------------------------------------------
+              document.addEventListener("DOMContentLoaded", () => {
+              renderGateways();
+              updatePreview();
+              });
 
-    </div>
-  </div>
+              function renderGateways() {
+              const container = document.getElementById("gatewayContainer");
+              GATEWAYS.forEach(gw => {
+              const btn = document.createElement("button");
+              btn.className = "pill-btn";
+              btn.textContent = gw;
+              btn.onclick = () => {
+              if (selectedGateways.has(gw)) {
+              selectedGateways.delete(gw);
+              btn.classList.remove("active");
+              } else {
+              selectedGateways.add(gw);
+              btn.classList.add("active");
+              }
+              renderGatewayConfig();
+              };
+              container.appendChild(btn);
+              });
+              }
 
-  <!-- RIGHT: LIVE PREVIEW -->
-  <div
-    class="w-[400px] bg-slate-950 border-l border-slate-800 hidden lg:flex flex-col items-center justify-center p-8 relative">
-  </div>
-  <button class="text-xs bg-slate-800 text-white px-3 py-1 rounded-full"
-    onclick="setPreviewMode('whatsapp')">WhatsApp</button>
-  <script>
-    // ------------------------------------------------------
-    // STATE
-    // ------------------------------------------------------
-    let currentStep = 1;
-    const totalSteps = 7;
-    const selectedGateways = new Set();
-    const GATEWAYS = ["Razorpay", "Stripe", "Cashfree", "PayU", "PhonePe", "Paytm", "CCAvenue", "Juspay", "Custom Gateway (Not listed here?)"];
-    let previewMode = 'whatsapp';
+              function renderGatewayConfig() {
+              const container = document.getElementById("gatewayConfigContainer");
+              container.innerHTML = "";
 
-    // ------------------------------------------------------
-    // INIT
-    // ------------------------------------------------------
-    document.addEventListener("DOMContentLoaded", () => {
-      renderGateways();
-      updatePreview();
-    });
+              // Add Documentation Link
+              const guideLink = document.createElement("div");
+              guideLink.className = "mb-6 text-right";
+              guideLink.innerHTML = `<a href="gateway-guide.html" target="_blank"
+                class="text-tinko-orange text-sm hover:underline flex items-center justify-end gap-2"><i
+                  class="fas fa-book"></i> How to find these details?</a>`;
+              container.appendChild(guideLink);
 
-    function renderGateways() {
-      const container = document.getElementById("gatewayContainer");
-      GATEWAYS.forEach(gw => {
-        const btn = document.createElement("button");
-        btn.className = "pill-btn";
-        btn.textContent = gw;
-        btn.onclick = () => {
-          if (selectedGateways.has(gw)) {
-            selectedGateways.delete(gw);
-            btn.classList.remove("active");
-          } else {
-            selectedGateways.add(gw);
-            btn.classList.add("active");
-          }
-          renderGatewayConfig();
-        };
-        container.appendChild(btn);
-      });
-    }
+              if (selectedGateways.size === 0) {
+              container.innerHTML += '<p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see
+                configuration
+                here.</p>';
+              return;
+              }
 
-    function renderGatewayConfig() {
-      const container = document.getElementById("gatewayConfigContainer");
-      container.innerHTML = "";
+              selectedGateways.forEach(gw => {
+              const div = document.createElement("div");
+              div.className = "bg-slate-800/50 p-4 rounded-lg border border-slate-700 mb-4";
 
-      // Add Documentation Link
-      const guideLink = document.createElement("div");
-      guideLink.className = "mb-6 text-right";
-      guideLink.innerHTML = `<a href="gateway-guide.html" target="_blank" class="text-tinko-orange text-sm hover:underline flex items-center justify-end gap-2"><i class="fas fa-book"></i> How to find these details?</a>`;
-      container.appendChild(guideLink);
-
-      if (selectedGateways.size === 0) {
-        container.innerHTML += '<p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see configuration here.</p>';
-        return;
-      }
-
-      selectedGateways.forEach(gw => {
-        const div = document.createElement("div");
-        div.className = "bg-slate-800/50 p-4 rounded-lg border border-slate-700 mb-4";
-
-        if (gw === "Custom Gateway (Not listed here?)") {
-          div.innerHTML = `
-            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-gray-500"></div> Custom Gateway</h3>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Gateway Name & Details</label>
-              <textarea class="input-field text-sm" rows="3" placeholder="e.g. Worldline, BillDesk. Please enter the name and we will contact you for integration."></textarea>
-            </div>
-          `;
-        } else {
-          div.innerHTML = `
-            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div> ${gw} Configuration</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              if (gw === "Custom Gateway (Not listed here?)") {
+              div.innerHTML = `
+              <h3 class="font-bold text-white mb-3 flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-gray-500"></div> Custom Gateway
+              </h3>
               <div>
-                <label class="block text-xs text-slate-400 mb-1">Key ID / API Key</label>
-                <input type="password" class="input-field text-sm" placeholder="${gw} Key ID">
+                <label class="block text-xs text-slate-400 mb-1">Gateway Name & Details</label>
+                <textarea class="input-field text-sm" rows="3"
+                  placeholder="e.g. Worldline, BillDesk. Please enter the name and we will contact you for integration."></textarea>
               </div>
-              <div>
-                <label class="block text-xs text-slate-400 mb-1">Key Secret</label>
-                <input type="password" class="input-field text-sm" placeholder="${gw} Secret">
+              `;
+              } else {
+              div.innerHTML = `
+              <h3 class="font-bold text-white mb-3 flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div> ${gw} Configuration
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs text-slate-400 mb-1">Key ID / API Key</label>
+                  <input type="password" class="input-field text-sm" placeholder="${gw} Key ID">
+                </div>
+                <div>
+                  <label class="block text-xs text-slate-400 mb-1">Key Secret</label>
+                  <input type="password" class="input-field text-sm" placeholder="${gw} Secret">
+                </div>
               </div>
-            </div>
-            <div class="mt-3 text-xs text-slate-500">
-              <p class="mb-1"><strong>Required Webhook Events:</strong></p>
-              <div class="flex gap-2 flex-wrap">
-                <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.failed</span>
-                <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.authorized</span>
+              <div class="mt-3 text-xs text-slate-500">
+                <p class="mb-1"><strong>Required Webhook Events:</strong></p>
+                <div class="flex gap-2 flex-wrap">
+                  <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.failed</span>
+                  <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.authorized</span>
+                </div>
               </div>
-            </div>
-          `;
-        }
-        container.appendChild(div);
-      });
-    }
+              `;
+              }
+              container.appendChild(div);
+              });
+              }
 
-    // ------------------------------------------------------
-    // NAVIGATION
-    // ------------------------------------------------------
-    function changeStep(dir) {
-      // Validate current step before moving next
-      if (dir === 1 && !validateStep(currentStep)) return;
+              // ------------------------------------------------------
+              // NAVIGATION
+              // ------------------------------------------------------
+              function changeStep(dir) {
+              // Validate current step before moving next
+              if (dir === 1 && !validateStep(currentStep)) return;
 
-      const newStep = currentStep + dir;
-      if (newStep < 1 || newStep > totalSteps) {
-        if (newStep > totalSteps) submitForm();
-        return;
-      }
+              const newStep = currentStep + dir;
+              if (newStep < 1 || newStep> totalSteps) {
+                if (newStep > totalSteps) submitForm();
+                return;
+                }
 
-      // Hide current
-      document.getElementById(`step-${currentStep}`).classList.add("hidden");
-      document.getElementById(`nav-step-${currentStep}`).classList.replace("step-active", "step-inactive");
+                // Hide current
+                document.getElementById(`step-${currentStep}`).classList.add("hidden");
+                document.getElementById(`nav-step-${currentStep}`).classList.replace("step-active", "step-inactive");
 
-      // Show new
-      document.getElementById(`step-${newStep}`).classList.remove("hidden");
-      document.getElementById(`nav-step-${newStep}`).classList.replace("step-inactive", "step-active");
+                // Show new
+                document.getElementById(`step-${newStep}`).classList.remove("hidden");
+                document.getElementById(`nav-step-${newStep}`).classList.replace("step-inactive", "step-active");
 
-      currentStep = newStep;
+                currentStep = newStep;
 
-      // Button State
-      document.getElementById("prevBtn").classList.toggle("hidden", currentStep === 1);
-      document.getElementById("nextBtn").textContent = currentStep === totalSteps ? "Finish Setup" : "Next Step →";
-    }
+                // Button State
+                document.getElementById("prevBtn").classList.toggle("hidden", currentStep === 1);
+                document.getElementById("nextBtn").textContent = currentStep === totalSteps ? "Finish Setup" : "Next
+                Step →";
+                }
 
-    function validateStep(step) {
-      if (step === 1) {
-        if (!document.getElementById("businessName").value) return alert("Business Name is required");
-      }
-      if (step === 2) {
-        if (selectedGateways.size === 0) return alert("Select at least one gateway");
-      }
-      if (step === 7) {
-        if (!document.getElementById("termsCheck").checked) return alert("Please accept Terms & Privacy Policy");
-      }
-      return true;
-    }
+                function validateStep(step) {
+                if (step === 1) {
+                if (!document.getElementById("businessName").value) return alert("Business Name is required");
+                }
+                if (step === 2) {
+                if (selectedGateways.size === 0) return alert("Select at least one gateway");
+                }
+                if (step === 7) {
+                if (!document.getElementById("termsCheck").checked) return alert("Please accept Terms & Privacy
+                Policy");
+                }
+                return true;
+                }
 
-    // ------------------------------------------------------
-    // PREVIEW LOGIC
-    // ------------------------------------------------------
-    function setPreviewMode(mode) {
-      previewMode = mode;
+                // ------------------------------------------------------
+                // PREVIEW LOGIC
+                // ------------------------------------------------------
+                function setPreviewMode(mode) {
+                previewMode = mode;
 
-      // Update Buttons
-      const btns = document.querySelectorAll('[onclick^="setPreviewMode"]');
-      btns.forEach(b => {
-        if (b.getAttribute('onclick').includes(mode)) {
-          b.className = "text-xs bg-slate-800 text-white px-3 py-1 rounded-full";
-        } else {
-          b.className = "text-xs text-slate-500 px-3 py-1 rounded-full hover:text-white";
-        }
-      });
+                // Update Buttons
+                const btns = document.querySelectorAll('[onclick^="setPreviewMode"]');
+                btns.forEach(b => {
+                if (b.getAttribute('onclick').includes(mode)) {
+                b.className = "text-xs bg-slate-800 text-white px-3 py-1 rounded-full";
+                } else {
+                b.className = "text-xs text-slate-500 px-3 py-1 rounded-full hover:text-white";
+                }
+                });
 
-      // Update Content
-      const waContent = document.getElementById("waPreviewContent");
-      const emailContent = document.getElementById("emailPreviewContent");
+                // Update Content
+                const waContent = document.getElementById("waPreviewContent");
+                const emailContent = document.getElementById("emailPreviewContent");
 
-      if (waContent && emailContent) {
-        if (mode === 'whatsapp') {
-          waContent.classList.remove("hidden");
-          emailContent.classList.add("hidden");
-        } else {
-          waContent.classList.add("hidden");
-          emailContent.classList.remove("hidden");
-        }
-      }
-    }
+                if (waContent && emailContent) {
+                if (mode === 'whatsapp') {
+                waContent.classList.remove("hidden");
+                emailContent.classList.add("hidden");
+                } else {
+                waContent.classList.add("hidden");
+                emailContent.classList.remove("hidden");
+                }
+                }
+                }
 
-    function updatePreview() {
-      const name = document.getElementById("businessName").value || "Acme Store";
-      const brand = document.getElementById("brandName").value || name;
+                function updatePreview() {
+                const name = document.getElementById("businessName").value || "Acme Store";
+                const brand = document.getElementById("brandName").value || name;
 
-      // Update Text
-      document.querySelectorAll(".preview-business-name").forEach(el => el.textContent = name);
-      document.querySelectorAll(".preview-brand-name").forEach(el => el.textContent = brand);
-    }
+                // Update Text
+                document.querySelectorAll(".preview-business-name").forEach(el => el.textContent = name);
+                document.querySelectorAll(".preview-brand-name").forEach(el => el.textContent = brand);
+                }
 
-    function setDest(btn, val) {
-      document.getElementById("recoveryDest").value = val;
-      // Update UI
-      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    }
+                function setDest(btn, val) {
+                document.getElementById("recoveryDest").value = val;
+                // Update UI
+                btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                }
 
-    // ------------------------------------------------------
-    // SUBMIT
-    // ------------------------------------------------------
-    async function submitForm() {
-      const btn = document.getElementById("nextBtn");
-      btn.disabled = true;
-      btn.textContent = "Saving...";
+                // ------------------------------------------------------
+                // SUBMIT
+                // ------------------------------------------------------
+                async function submitForm() {
+                const btn = document.getElementById("nextBtn");
+                btn.disabled = true;
+                btn.textContent = "Saving...";
 
-      const API_BASE = (() => {
-        const h = window.location.hostname;
-        if (!h || h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:8000";
-        return 'https://tinko-clean-backend.onrender.com';
-      })();
+                const API_BASE = (() => {
+                const h = window.location.hostname;
+                if (!h || h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:8000";
+                return 'https://tinko-clean-backend.onrender.com';
+                })();
 
-      const payload = {
-        business_name: document.getElementById("businessName").value,
-        website: document.getElementById("websiteUrl").value,
-        industry: document.getElementById("industry").value,
-        business_size: document.getElementById("businessSize").value,
+                const payload = {
+                business_name: document.getElementById("businessName").value,
+                website: document.getElementById("websiteUrl").value,
+                industry: document.getElementById("industry").value,
+                business_size: document.getElementById("businessSize").value,
 
-        payment_gateways: Array.from(selectedGateways),
-        monthly_volume: document.getElementById("monthlyVolume").value,
-        monthly_gmv: document.getElementById("monthlyGmv").value,
+                payment_gateways: Array.from(selectedGateways),
+                monthly_volume: document.getElementById("monthlyVolume").value,
+                monthly_gmv: document.getElementById("monthlyGmv").value,
 
-        recovery_channels: Array.from(document.querySelectorAll(".channel-check:checked")).map(c => c.value),
-        recovery_destination: document.getElementById("recoveryDest").value,
+                recovery_channels: Array.from(document.querySelectorAll(".channel-check:checked")).map(c => c.value),
+                recovery_destination: document.getElementById("recoveryDest").value,
 
-        // Mock credentials collection (in real app, gather from inputs)
-        gateway_credentials: {},
+                // Mock credentials collection (in real app, gather from inputs)
+                gateway_credentials: {},
 
-        brand_name: document.getElementById("brandName").value,
-        support_email: document.getElementById("supportEmail").value,
-        reply_to_email: document.getElementById("replyToEmail").value,
+                brand_name: document.getElementById("brandName").value,
+                support_email: document.getElementById("supportEmail").value,
+                reply_to_email: document.getElementById("replyToEmail").value,
 
-        team_contacts: {
-          tech: document.getElementById("techEmail").value,
-          finance: document.getElementById("financeEmail").value
-        },
+                team_contacts: {
+                tech: document.getElementById("techEmail").value,
+                finance: document.getElementById("financeEmail").value
+                },
 
-        gst_number: document.getElementById("gstNumber").value,
-        billing_email: document.getElementById("billingEmail").value,
+                gst_number: document.getElementById("gstNumber").value,
+                billing_email: document.getElementById("billingEmail").value,
 
-        // Required by schema but not in form (auto-filled)
-        phone: "9999999999"
-      };
+                // Required by schema but not in form (auto-filled)
+                phone: "9999999999"
+                };
 
-      const token = localStorage.getItem("tinko_access_token");
+                const token = localStorage.getItem("tinko_access_token");
 
-      try {
-        const res = await fetch(`${API_BASE}/v1/customer/onboarding`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-          body: JSON.stringify(payload)
-        });
+                try {
+                const res = await fetch(`${API_BASE}/v1/customer/onboarding`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+                body: JSON.stringify(payload)
+                });
 
-        if (res.ok) {
-          window.location.href = "index.html";
-        } else {
-          const d = await res.json();
-          alert("Error: " + (d.detail || "Setup failed"));
-          btn.disabled = false;
-          btn.textContent = "Finish Setup";
-        }
-      } catch (e) {
-        console.error(e);
-        alert("Network Error");
-        btn.disabled = false;
-      }
-    }
-  </script>
+                if (res.ok) {
+                window.location.href = "index.html";
+                } else {
+                const d = await res.json();
+                alert("Error: " + (d.detail || "Setup failed"));
+                btn.disabled = false;
+                btn.textContent = "Finish Setup";
+                }
+                } catch (e) {
+                console.error(e);
+                alert("Network Error");
+                btn.disabled = false;
+                }
+                }
+                </script>
 </body>
 
 </html>
