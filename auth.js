@@ -3,14 +3,9 @@
 // --------------------------------
 const API_BASE = (() => {
   const hostname = window.location.hostname;
-
-  // If accessing via mobile (IP address), use laptop's IP
-  // But if hostname is empty (file://) or localhost, use local backend
   if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1') {
     return "http://127.0.0.1:8000";
   }
-
-  // Otherwise (e.g. deployed on Vercel/Render), use the cloud backend
   return 'https://tinko-clean-backend.onrender.com';
 })();
 
@@ -29,6 +24,49 @@ const sendOtpBtn = document.getElementById("sendOtpBtn");
 const verifyOtpBtn = document.getElementById("verifyOtpBtn");
 const resendOtp = document.getElementById("resendOtp");
 const loginMessage = document.getElementById("loginMessage");
+
+// Toggle Elements
+const tabLogin = document.getElementById("tabLogin");
+const tabSignup = document.getElementById("tabSignup");
+const authHeader = document.getElementById("authHeader");
+
+// State
+let currentIntent = "login"; // "login" or "signup"
+
+// --------------------------------
+// TOGGLE LOGIC
+// --------------------------------
+if (tabLogin && tabSignup) {
+  tabLogin.addEventListener("click", () => setMode("login"));
+  tabSignup.addEventListener("click", () => setMode("signup"));
+}
+
+function setMode(mode) {
+  currentIntent = mode;
+  setMessage(""); // Clear errors
+
+  if (mode === "login") {
+    // UI: Active Login
+    tabLogin.classList.add("bg-tinko-orange", "text-white");
+    tabLogin.classList.remove("text-slate-300");
+
+    tabSignup.classList.remove("bg-tinko-orange", "text-white");
+    tabSignup.classList.add("text-slate-300");
+
+    authHeader.textContent = "Welcome Back";
+    sendOtpBtn.textContent = "Send Login OTP";
+  } else {
+    // UI: Active Signup
+    tabSignup.classList.add("bg-tinko-orange", "text-white");
+    tabSignup.classList.remove("text-slate-300");
+
+    tabLogin.classList.remove("bg-tinko-orange", "text-white");
+    tabLogin.classList.add("text-slate-300");
+
+    authHeader.textContent = "Get Started";
+    sendOtpBtn.textContent = "Create Account";
+  }
+}
 
 // --------------------------------
 // MESSAGE HELPER
@@ -49,29 +87,30 @@ if (sendOtpBtn) {
     if (!email) return alert("Enter a valid email");
 
     sendOtpBtn.disabled = true;
+    const originalText = sendOtpBtn.textContent;
     sendOtpBtn.textContent = "Sending...";
 
     try {
       const res = await fetch(`${API_BASE}/v1/auth/email/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, intent: currentIntent })
       });
 
       if (res.ok) {
-        setMessage("OTP sent to your email.");
+        setMessage(`OTP sent! Check your email to ${currentIntent}.`);
         step1.classList.add("hidden");
         step2.classList.remove("hidden");
       } else {
-        setMessage("Failed to send OTP. Please try again.", true);
+        const data = await res.json();
+        setMessage(data.detail || "Failed to send OTP.", true);
       }
     } catch (err) {
       console.error("SEND OTP ERROR:", err);
-      // DEBUG INFO ADDED HERE
       setMessage(`Backend unreachable (${API_BASE}). Check API.`, true);
     } finally {
       sendOtpBtn.disabled = false;
-      sendOtpBtn.textContent = "Send OTP";
+      sendOtpBtn.textContent = originalText;
     }
   });
 }
@@ -102,10 +141,10 @@ if (verifyOtpBtn) {
       const accessToken = data.access_token;
 
       if (accessToken) {
-        setMessage("Login successful! Redirecting...");
+        setMessage("Success! Redirecting...");
         await handlePostLoginRedirect(accessToken);
       } else {
-        setMessage("Login failed: no token received.", true);
+        setMessage("Invalid OTP.", true);
       }
     } catch (err) {
       console.error("VERIFY OTP ERROR:", err);
@@ -142,10 +181,13 @@ async function handlePostLoginRedirect(token) {
     });
 
     if (res.ok) {
+      // Profile exists -> Dashboard
       window.location.href = "dashboard/index.html";
     } else if (res.status === 404) {
+      // Profile missing -> Onboarding
       window.location.href = "dashboard/onboarding.html";
     } else {
+      // Fallback
       window.location.href = "dashboard/index.html";
     }
   } catch (err) {

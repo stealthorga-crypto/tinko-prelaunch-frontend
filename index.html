@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Tinko — The Moment That Matters, Saved.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tinko recovers lost revenue from failed payments using intelligent retry links and respectful follow-up messaging.">
-  
+  <meta name="description"
+    content="Tinko recovers lost revenue from failed payments using intelligent retry links and respectful follow-up messaging.">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
   <script>
     tailwind.config = {
@@ -38,271 +41,284 @@
 
 <body class="text-tinko-dark">
 
-<!-- NAVBAR -->
-<header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200">
-  <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
-    <div class="font-extrabold tracking-[0.20em] text-tinko-orange text-xl">TINKO</div>
-    <a href="#login" class="rounded-full bg-tinko-orange px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 shadow">
-      Login
-    </a>
-  </div>
-</header>
-
-
-<!-- HERO -->
-<section class="max-w-6xl mx-auto px-4 py-20">
-  
-  <p class="text-sm font-semibold tracking-[0.18em] text-tinko-orange mb-4">THE MOMENT THAT MATTERS — SAVED</p>
-
-  <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-    Your customer tried to pay.<br/>
-    <span class="text-tinko-orange">Tinko makes sure they succeed.</span>
-  </h1>
-
-  <p class="max-w-2xl text-lg text-tinko-muted mb-10">
-    Every failed payment is lost intent —
-    Tinko detects failures instantly and brings them back with a clean retry link sent through trusted channels.
-  </p>
-
-  <div class="flex flex-col sm:flex-row gap-4">
-    <a href="#login" class="bg-tinko-orange hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg">
-      Login with OTP
-    </a>
-    <a href="#solution" class="border border-gray-300 hover:border-tinko-orange hover:text-tinko-orange text-tinko-dark font-semibold px-8 py-4 rounded-xl">
-      See How It Works
-    </a>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-14 text-center sm:text-left">
-    <div>
-      <p class="text-2xl font-bold">1 in 3</p>
-      <p class="text-sm text-tinko-muted">online payments fail</p>
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
+      <div class="font-extrabold tracking-[0.20em] text-tinko-orange text-xl">TINKO</div>
+      <a href="#login"
+        class="rounded-full bg-tinko-orange px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 shadow">
+        Login
+      </a>
     </div>
-    <div>
-      <p class="text-2xl font-bold">70%</p>
-      <p class="text-sm text-tinko-muted">customers never retry</p>
-    </div>
-    <div>
-      <p class="text-2xl font-bold">Pure Upside</p>
-      <p class="text-sm text-tinko-muted">revenue you already earned</p>
-    </div>
-  </div>
-
-</section>
+  </header>
 
 
-<!-- PROBLEM -->
-<section id="problem" class="bg-white border-y border-gray-200 py-20">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6">
-      The last step of your funnel is silently leaking money.
-    </h2>
-    <p class="max-w-3xl text-lg text-tinko-muted mb-12">
-      You spent on ads, design, product, logistics.
-      The customer reached checkout. They clicked pay.
-      Then something breaks — OTP timeout, network issue, bank decline, gateway errors.
-      And they simply leave.
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto px-4 py-20">
+
+    <p class="text-sm font-semibold tracking-[0.18em] text-tinko-orange mb-4">THE MOMENT THAT MATTERS — SAVED</p>
+
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+      Your customer tried to pay.<br />
+      <span class="text-tinko-orange">Tinko makes sure they succeed.</span>
+    </h1>
+
+    <p class="max-w-2xl text-lg text-tinko-muted mb-10">
+      Every failed payment is lost intent —
+      Tinko detects failures instantly and brings them back with a clean retry link sent through trusted channels.
     </p>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="p-6 rounded-xl bg-rose-50 border border-rose-100">
-        <h3 class="font-semibold text-rose-700 mb-2">A hidden leak</h3>
-        <p class="text-sm text-rose-900">Failed payments don’t appear in GA, Meta Ads, or CRM dashboards. The loss is invisible — but real.</p>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="#login"
+        class="bg-tinko-orange hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg">
+        Login with OTP
+      </a>
+      <a href="#solution"
+        class="border border-gray-300 hover:border-tinko-orange hover:text-tinko-orange text-tinko-dark font-semibold px-8 py-4 rounded-xl">
+        See How It Works
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-14 text-center sm:text-left">
+      <div>
+        <p class="text-2xl font-bold">1 in 3</p>
+        <p class="text-sm text-tinko-muted">online payments fail</p>
       </div>
-      <div class="p-6 rounded-xl bg-amber-50 border border-amber-100">
-        <h3 class="font-semibold text-amber-800 mb-2">Nobody owns it</h3>
-        <p class="text-sm text-amber-900">Product thinks it’s payments. Payments think it’s banks. Support says “please retry.” Nobody fixes it.</p>
+      <div>
+        <p class="text-2xl font-bold">70%</p>
+        <p class="text-sm text-tinko-muted">customers never retry</p>
       </div>
-      <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
-        <h3 class="font-semibold text-slate-800 mb-2">No manual recovery</h3>
-        <p class="text-sm text-slate-900">Your team cannot manually catch and follow up every failure in real time. It’s impossible at scale.</p>
+      <div>
+        <p class="text-2xl font-bold">Pure Upside</p>
+        <p class="text-sm text-tinko-muted">revenue you already earned</p>
       </div>
     </div>
-  </div>
-</section>
+
+  </section>
 
 
-<!-- SOLUTION -->
-<section id="solution" class="py-20 bg-white">
-  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
-
-    <div>
+  <!-- PROBLEM -->
+  <section id="problem" class="bg-white border-y border-gray-200 py-20">
+    <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl md:text-4xl font-bold mb-6">
-        Tinko catches the drop —
-        <span class="text-tinko-orange">and brings the sale back.</span>
+        The last step of your funnel is silently leaking money.
       </h2>
-
-      <p class="text-lg text-tinko-muted mb-10 max-w-xl">
-        When a payment fails, Tinko instantly detects it and sends the customer a clean retry link via SMS, WhatsApp or email — letting them complete the payment in one tap.
+      <p class="max-w-3xl text-lg text-tinko-muted mb-12">
+        You spent on ads, design, product, logistics.
+        The customer reached checkout. They clicked pay.
+        Then something breaks — OTP timeout, network issue, bank decline, gateway errors.
+        And they simply leave.
       </p>
 
-      <div class="space-y-6">
-        <div>
-          <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your customer</h3>
-          <ul class="space-y-2 text-sm text-tinko-muted">
-            <li>• A simple retry link — no need to find the product again.</li>
-            <li>• Delivered via trusted, verified channels.</li>
-            <li>• Zero spam — respectful follow-ups only.</li>
-            <li>• Same cart, same journey — friction removed.</li>
-          </ul>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-xl bg-rose-50 border border-rose-100">
+          <h3 class="font-semibold text-rose-700 mb-2">A hidden leak</h3>
+          <p class="text-sm text-rose-900">Failed payments don’t appear in GA, Meta Ads, or CRM dashboards. The loss is
+            invisible — but real.</p>
         </div>
-
-        <div>
-          <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your business</h3>
-          <ul class="space-y-2 text-sm text-tinko-muted">
-            <li>• Recover revenue already won in intent.</li>
-            <li>• Works with Razorpay/Stripe/Cashfree — no changes needed.</li>
-            <li>• Clear view of how much money failed payments cost you.</li>
-            <li>• Invisible infrastructure — your brand stays in front.</li>
-          </ul>
+        <div class="p-6 rounded-xl bg-amber-50 border border-amber-100">
+          <h3 class="font-semibold text-amber-800 mb-2">Nobody owns it</h3>
+          <p class="text-sm text-amber-900">Product thinks it’s payments. Payments think it’s banks. Support says
+            “please retry.” Nobody fixes it.</p>
+        </div>
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
+          <h3 class="font-semibold text-slate-800 mb-2">No manual recovery</h3>
+          <p class="text-sm text-slate-900">Your team cannot manually catch and follow up every failure in real time.
+            It’s impossible at scale.</p>
         </div>
       </div>
     </div>
-
-    <!-- VISUAL FUNNEL -->
-    <div class="rounded-3xl bg-gray-900 text-gray-200 p-6 shadow-xl space-y-6">
-      <p class="text-xs tracking-[0.20em] font-semibold text-gray-400">FAIL → RECOVER FUNNEL</p>
-
-      <div class="space-y-6">
-        <div class="flex items-start gap-4">
-          <div class="h-9 w-9 rounded-xl bg-slate-800 flex items-center justify-center text-xs">1</div>
-          <div>
-            <p class="font-semibold text-gray-100 text-sm">Customer attempts payment</p>
-            <p class="text-xs text-gray-400">Checkout loaded. “Pay Now” clicked.</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="h-9 w-9 rounded-xl bg-red-600 flex items-center justify-center text-xs font-bold text-white">!</div>
-          <div>
-            <p class="font-semibold text-gray-100 text-sm">Payment fails</p>
-            <p class="text-xs text-gray-400">Network issues, OTP delay, bank decline.</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="h-9 w-9 rounded-xl bg-tinko-orange flex items-center justify-center text-xs font-bold text-white">T</div>
-          <div>
-            <p class="font-semibold text-gray-100 text-sm">Tinko intervenes</p>
-            <p class="text-xs text-gray-400">Sends a clean recovery link instantly.</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="h-9 w-9 rounded-xl bg-emerald-500 flex items-center justify-center text-xs font-bold text-white">✓</div>
-          <div>
-            <p class="font-semibold text-gray-100 text-sm">Payment completes</p>
-            <p class="text-xs text-gray-400">Customer finishes checkout. Revenue saved.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- BENEFITS -->
-<section id="benefits" class="bg-gray-50 py-20 border-t border-gray-200">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl font-bold mb-10">Why modern brands choose <span class="text-tinko-orange">Tinko</span></h2>
+  <!-- SOLUTION -->
+  <section id="solution" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="p-6 bg-white rounded-xl shadow-sm">
-        <h3 class="font-semibold mb-2">Never touches payments</h3>
-        <p class="text-sm text-tinko-muted">Payments always flow through your gateway — Tinko only assists recovery.</p>
-      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          Tinko catches the drop —
+          <span class="text-tinko-orange">and brings the sale back.</span>
+        </h2>
 
-      <div class="p-6 bg-white rounded-xl shadow-sm">
-        <h3 class="font-semibold mb-2">Respects your customers</h3>
-        <p class="text-sm text-tinko-muted">No spam. No pressure. Only thoughtful reminders.</p>
-      </div>
-
-      <div class="p-6 bg-white rounded-xl shadow-sm">
-        <h3 class="font-semibold mb-2">Works with your stack</h3>
-        <p class="text-sm text-tinko-muted">Razorpay, Stripe, Cashfree — plug in and go.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- LOGIN WITH OTP -->
-<section id="login" class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
-  <div class="max-w-6xl mx-auto px-4 text-center">
-    
-    <h2 class="text-3xl md:text-4xl font-bold mb-6">Login to your Tinko Dashboard</h2>
-    <p class="text-slate-300 max-w-2xl mx-auto mb-10">
-      Sign in with your email. We’ll send you a one-time password (OTP) — no passwords, no friction.
-    </p>
-
-    <div class="max-w-md mx-auto space-y-6">
-
-      <!-- STEP 1: ENTER EMAIL -->
-      <div id="step1" class="space-y-4">
-        <input
-          id="login_email"
-          type="email"
-          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
-          placeholder="Enter your email"
-          required
-        />
-
-        <button
-          id="sendOtpBtn"
-          class="w-full bg-tinko-orange hover:bg-orange-600 py-3 rounded-lg font-semibold shadow-lg"
-        >
-          Send OTP
-        </button>
-      </div>
-
-      <!-- STEP 2: VERIFY OTP -->
-      <div id="step2" class="space-y-4 hidden">
-        <input
-          id="otp_code"
-          type="text"
-          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
-          placeholder="Enter the OTP"
-          required
-        />
-
-        <button
-          id="verifyOtpBtn"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-lg font-semibold shadow-lg"
-        >
-          Verify OTP
-        </button>
-
-        <p id="resendOtp" class="text-xs text-slate-400 cursor-pointer hover:text-white">
-          Resend OTP
+        <p class="text-lg text-tinko-muted mb-10 max-w-xl">
+          When a payment fails, Tinko instantly detects it and sends the customer a clean retry link via SMS, WhatsApp
+          or email — letting them complete the payment in one tap.
         </p>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your customer</h3>
+            <ul class="space-y-2 text-sm text-tinko-muted">
+              <li>• A simple retry link — no need to find the product again.</li>
+              <li>• Delivered via trusted, verified channels.</li>
+              <li>• Zero spam — respectful follow-ups only.</li>
+              <li>• Same cart, same journey — friction removed.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your business</h3>
+            <ul class="space-y-2 text-sm text-tinko-muted">
+              <li>• Recover revenue already won in intent.</li>
+              <li>• Works with Razorpay/Stripe/Cashfree — no changes needed.</li>
+              <li>• Clear view of how much money failed payments cost you.</li>
+              <li>• Invisible infrastructure — your brand stays in front.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <p id="loginMessage" class="text-sm text-slate-300"></p>
+      <!-- VISUAL FUNNEL -->
+      <div class="rounded-3xl bg-gray-900 text-gray-200 p-6 shadow-xl space-y-6">
+        <p class="text-xs tracking-[0.20em] font-semibold text-gray-400">FAIL → RECOVER FUNNEL</p>
+
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="h-9 w-9 rounded-xl bg-slate-800 flex items-center justify-center text-xs">1</div>
+            <div>
+              <p class="font-semibold text-gray-100 text-sm">Customer attempts payment</p>
+              <p class="text-xs text-gray-400">Checkout loaded. “Pay Now” clicked.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="h-9 w-9 rounded-xl bg-red-600 flex items-center justify-center text-xs font-bold text-white">!
+            </div>
+            <div>
+              <p class="font-semibold text-gray-100 text-sm">Payment fails</p>
+              <p class="text-xs text-gray-400">Network issues, OTP delay, bank decline.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="h-9 w-9 rounded-xl bg-tinko-orange flex items-center justify-center text-xs font-bold text-white">T
+            </div>
+            <div>
+              <p class="font-semibold text-gray-100 text-sm">Tinko intervenes</p>
+              <p class="text-xs text-gray-400">Sends a clean recovery link instantly.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="h-9 w-9 rounded-xl bg-emerald-500 flex items-center justify-center text-xs font-bold text-white">✓
+            </div>
+            <div>
+              <p class="font-semibold text-gray-100 text-sm">Payment completes</p>
+              <p class="text-xs text-gray-400">Customer finishes checkout. Revenue saved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- FOOTER -->
-<footer class="bg-white border-t border-gray-200">
-  <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-tinko-muted">
-    <p>© <span id="year"></span> Tinko • A product of Blocks & Loops Technologies Pvt Ltd</p>
+  <!-- BENEFITS -->
+  <section id="benefits" class="bg-gray-50 py-20 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-10">Why modern brands choose <span class="text-tinko-orange">Tinko</span></h2>
 
-    <div class="flex gap-4">
-      <a href="privacy-policy.html" class="hover:text-tinko-dark">Privacy</a>
-      <a href="#" class="hover:text-tinko-dark">Terms</a>
-      <a href="mailto:contact@tinko.in" class="hover:text-tinko-dark">contact@tinko.in</a>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-xl shadow-sm">
+          <h3 class="font-semibold mb-2">Never touches payments</h3>
+          <p class="text-sm text-tinko-muted">Payments always flow through your gateway — Tinko only assists recovery.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl shadow-sm">
+          <h3 class="font-semibold mb-2">Respects your customers</h3>
+          <p class="text-sm text-tinko-muted">No spam. No pressure. Only thoughtful reminders.</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl shadow-sm">
+          <h3 class="font-semibold mb-2">Works with your stack</h3>
+          <p class="text-sm text-tinko-muted">Razorpay, Stripe, Cashfree — plug in and go.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
 
-<!-- OTP LOGIN LOGIC -->
-<script src="auth.js"></script>
+  <!-- LOGIN WITH OTP -->
+  <section id="login" class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+
+      <h2 id="authHeader" class="text-3xl md:text-4xl font-bold mb-6">Welcome Back</h2>
+      <p class="text-slate-300 max-w-2xl mx-auto mb-10">
+        Sign in with your email. We’ll send you a one-time password (OTP) — no passwords, no friction.
+      </p>
+
+      <div class="max-w-md mx-auto space-y-6">
+
+        <!-- TOGGLE: LOGIN / SIGNUP -->
+        <div class="flex justify-center gap-2 mb-6 bg-slate-800 p-1 rounded-full w-fit mx-auto">
+          <button id="tabLogin"
+            class="px-6 py-2 rounded-full bg-tinko-orange text-white font-semibold transition-all text-sm">Sign
+            In</button>
+          <button id="tabSignup"
+            class="px-6 py-2 rounded-full text-slate-300 font-semibold hover:text-white transition-all text-sm">Sign
+            Up</button>
+        </div>
+
+        <!-- STEP 1: ENTER EMAIL -->
+        <div id="step1" class="space-y-4">
+          <input id="login_email" type="email"
+            class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+            placeholder="Enter your email" required />
+
+          <button id="sendOtpBtn"
+            class="w-full bg-tinko-orange hover:bg-orange-600 py-3 rounded-lg font-semibold shadow-lg">
+            Send OTP
+          </button>
+        </div>
+
+        <!-- STEP 2: VERIFY OTP -->
+        <div id="step2" class="space-y-4 hidden">
+          <input id="otp_code" type="text"
+            class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
+            placeholder="Enter the OTP" required />
+
+          <button id="verifyOtpBtn"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-lg font-semibold shadow-lg">
+            Verify OTP
+          </button>
+
+          <p id="resendOtp" class="text-xs text-slate-400 cursor-pointer hover:text-white">
+            Resend OTP
+          </p>
+        </div>
+
+        <p id="loginMessage" class="text-sm text-slate-300"></p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200">
+    <div
+      class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-tinko-muted">
+      <p>© <span id="year"></span> Tinko • A product of Blocks & Loops Technologies Pvt Ltd</p>
+
+      <div class="flex gap-4">
+        <a href="privacy-policy.html" class="hover:text-tinko-dark">Privacy</a>
+        <a href="#" class="hover:text-tinko-dark">Terms</a>
+        <a href="mailto:contact@tinko.in" class="hover:text-tinko-dark">contact@tinko.in</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <!-- OTP LOGIN LOGIC -->
+  <script src="auth.js"></script>
 
 </body>
+
 </html>
