@@ -67,7 +67,8 @@ if (sendOtpBtn) {
       }
     } catch (err) {
       console.error("SEND OTP ERROR:", err);
-      setMessage("Backend unreachable. Check API.", true);
+      // DEBUG INFO ADDED HERE
+      setMessage(`Backend unreachable (${API_BASE}). Check API.`, true);
     } finally {
       sendOtpBtn.disabled = false;
       sendOtpBtn.textContent = "Send OTP";
@@ -108,7 +109,7 @@ if (verifyOtpBtn) {
       }
     } catch (err) {
       console.error("VERIFY OTP ERROR:", err);
-      setMessage("Backend unreachable. Check API.", true);
+      setMessage(`Backend unreachable (${API_BASE}). Check API.`, true);
     } finally {
       verifyOtpBtn.disabled = false;
       verifyOtpBtn.textContent = "Verify OTP";
