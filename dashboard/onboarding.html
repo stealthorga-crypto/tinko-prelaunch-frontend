@@ -138,98 +138,79 @@
       </p>
 
     </div>
+    // Get form values
+    const businessName = document.getElementById("businessName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const gateway = document.getElementById("gateway").value;
+    const website = document.getElementById("website").value.trim();
+    const volume = document.getElementById("volume").value;
 
-  </div>
+    // Validation
+    if (!businessName || !phone || !gateway) {
+    showError("Please fill in all required fields.");
+    return;
+    }
 
-  <!-- Auth Guard -->
-  <script src="auth-guard.js"></script>
+    // Get token from localStorage
+    const token = localStorage.getItem("tinko_access_token");
+    if (!token) {
+    showError("Authentication token not found. Please log in again.");
+    setTimeout(() => {
+    window.location.href = "../index.html";
+    }, 2000);
+    return;
+    }
 
-  <!-- Onboarding Logic -->
-  <script>
-    const API_BASE = "http://127.0.0.1:8000";
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Setting up your account...";
 
-    const form = document.getElementById("onboardingForm");
-    const submitBtn = document.getElementById("submitBtn");
-    const errorMessage = document.getElementById("errorMessage");
-    const successMessage = document.getElementById("successMessage");
+    try {
+    const response = await fetch(API_BASE + "/v1/customer/onboarding", {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({
+    business_name: businessName,
+    phone: phone,
+    payment_gateway: gateway,
+    website: website || null,
+    monthly_volume: volume || null
+    })
+    });
 
-    // Handle form submission
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // Get form values
-      const businessName = document.getElementById("businessName").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const gateway = document.getElementById("gateway").value;
-      const website = document.getElementById("website").value.trim();
-      const volume = document.getElementById("volume").value;
-
-      // Validation
-      if (!businessName || !phone || !gateway) {
-        showError("Please fill in all required fields.");
-        return;
-      }
-
-      // Get token from localStorage
-      const token = localStorage.getItem("tinko_access_token");
-      if (!token) {
-        showError("Authentication token not found. Please log in again.");
-        setTimeout(() => {
-          window.location.href = "../index.html";
-        }, 2000);
-        return;
-      }
-
-      // Disable button
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Setting up your account...";
-
-      try {
-        const response = await fetch(API_BASE + "/v1/customer/onboarding", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({
-            business_name: businessName,
-            phone: phone,
-            payment_gateway: gateway,
-            website: website || null,
-            monthly_volume: volume || null
-          })
-        });
-
-        if (response.ok) {
-          showSuccess("Profile created successfully! Redirecting to dashboard...");
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 1500);
-        } else {
-          const errorData = await response.json();
-          showError(errorData.detail || "Failed to create profile. Please try again.");
-        }
-      } catch (err) {
-        console.error("ONBOARDING ERROR:", err);
-        showError("Could not connect to server. Please check your connection.");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Complete Setup";
-      }
+    if (response.ok) {
+    showSuccess("Profile created successfully! Redirecting to dashboard...");
+    setTimeout(() => {
+    window.location.href = "index.html";
+    }, 1500);
+    } else {
+    const errorData = await response.json();
+    showError(errorData.detail || "Failed to create profile. Please try again.");
+    }
+    } catch (err) {
+    console.error("ONBOARDING ERROR:", err);
+    showError("Could not connect to server. Please check your connection.");
+    } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Complete Setup";
+    }
     });
 
     function showError(msg) {
-      errorMessage.textContent = msg;
-      errorMessage.classList.remove("hidden");
-      successMessage.classList.add("hidden");
+    errorMessage.textContent = msg;
+    errorMessage.classList.remove("hidden");
+    successMessage.classList.add("hidden");
     }
 
     function showSuccess(msg) {
-      successMessage.textContent = msg;
-      successMessage.classList.remove("hidden");
-      errorMessage.classList.add("hidden");
+    successMessage.textContent = msg;
+    successMessage.classList.remove("hidden");
+    errorMessage.classList.add("hidden");
     }
-  </script>
+    </script>
 
 </body>
 

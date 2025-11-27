@@ -1,45 +1,4 @@
-// ===============================
-// AUTH.JS — LOCAL TESTING VERSION
-// ===============================
-
-console.log("🔥 AUTH FILE LOADED FROM:", window.location.href);
-
-// --------------------------------
-// LOCAL BACKEND
-// --------------------------------
-const API_BASE = "http://127.0.0.1:8000";
-
-// Profile check
-const PROFILE_URL = API_BASE + "/v1/customer/profile";
-
-// --------------------------------
-// DOM Elements
-// --------------------------------
-const step1 = document.getElementById("step1");
 const step2 = document.getElementById("step2");
-
-const emailInput = document.getElementById("login_email");
-const otpInput = document.getElementById("otp_code");
-const loginMessage = document.getElementById("loginMessage");
-
-const sendOtpBtn = document.getElementById("sendOtpBtn");
-const verifyOtpBtn = document.getElementById("verifyOtpBtn");
-const resendOtp = document.getElementById("resendOtp");
-
-// --------------------------------
-// UI Helper
-// --------------------------------
-function setMessage(msg, isError = false) {
-  if (!loginMessage) return;
-  loginMessage.textContent = msg;
-  loginMessage.className = isError
-    ? "text-sm text-red-400 mt-2"
-    : "text-sm text-emerald-300 mt-2";
-}
-
-// --------------------------------
-// SEND OTP
-// --------------------------------
 if (sendOtpBtn) {
   sendOtpBtn.addEventListener("click", async () => {
     const email = emailInput?.value.trim();
@@ -149,4 +108,3 @@ async function handlePostLoginRedirect(token) {
     window.location.href = "dashboard/index.html";
   }
 }
-  
