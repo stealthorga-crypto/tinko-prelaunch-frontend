@@ -3,15 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Complete Your Profile — Tinko</title>
+  <title>Setup Tinko — Smart Onboarding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Complete your Tinko profile to start recovering lost revenue.">
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -20,7 +17,7 @@
           colors: {
             "tinko-orange": "#DE6B06",
             "tinko-dark": "#0b1220",
-            "tinko-muted": "#6b7280"
+            "tinko-card": "#1e293b"
           },
           fontFamily: {
             jakarta: ['"Plus Jakarta Sans"', "sans-serif"]
@@ -29,189 +26,552 @@
       }
     }
   </script>
-
   <style>
     body {
       font-family: "Plus Jakarta Sans", sans-serif;
-      background: linear-gradient(140deg, #0f172a, #1e293b, #0b1220);
+      background: #0f172a;
+      color: white;
+    }
+
+    .step-active {
+      border-left: 3px solid #DE6B06;
+      padding-left: 12px;
+      color: white;
+    }
+
+    .step-inactive {
+      border-left: 3px solid #334155;
+      padding-left: 12px;
+      color: #64748b;
+    }
+
+    .input-field {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: #DE6B06;
+    }
+
+    .pill-btn {
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .pill-btn.active {
+      background: #DE6B06;
+      border-color: #DE6B06;
+      color: white;
+    }
+
+    .preview-phone {
+      background: white;
+      border-radius: 30px;
+      border: 8px solid #334155;
+      overflow: hidden;
+      height: 600px;
+      width: 300px;
+      position: relative;
+      color: black;
     }
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="h-screen flex overflow-hidden">
 
-  <!-- ONBOARDING CARD -->
-  <div class="w-full max-w-2xl">
+  <!-- LEFT: SIDEBAR STEPS -->
+  <div class="w-64 bg-slate-900 border-r border-slate-800 p-8 hidden md:block">
+    <div class="font-extrabold text-tinko-orange text-xl mb-10 tracking-widest">TINKO</div>
+    <div class="space-y-6 text-sm font-medium">
+      <div id="nav-step-1" class="step-active">1. Business Info</div>
+      <div id="nav-step-2" class="step-inactive">2. Payment Stack</div>
+      <div id="nav-step-3" class="step-inactive">3. Recovery Prefs</div>
+      <div id="nav-step-4" class="step-inactive">4. Technical Setup</div>
+      <div id="nav-step-5" class="step-inactive">5. Branding</div>
+      <div id="nav-step-6" class="step-inactive">6. Team Contacts</div>
+      <div id="nav-step-7" class="step-inactive">7. Compliance</div>
+    </div>
+  </div>
 
-    <!-- Header -->
-    <div class="text-center mb-8">
-      <div class="inline-block">
-        <div class="font-extrabold tracking-[0.20em] text-tinko-orange text-2xl mb-3">TINKO</div>
-        <p class="text-gray-300 text-sm">Complete your profile to get started</p>
+  <!-- MIDDLE: FORM AREA -->
+  <div class="flex-1 overflow-y-auto p-8 md:p-12 relative">
+    <div class="max-w-2xl mx-auto pb-20">
+
+      <!-- STEP 1: BUSINESS INFO -->
+      <div id="step-1" class="step-content">
+        <h1 class="text-3xl font-bold mb-2">Business Information</h1>
+        <p class="text-slate-400 mb-8">Let's start with the basics.</p>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Business Name</label>
+            <input type="text" id="businessName" class="input-field" placeholder="e.g. Acme Inc"
+              oninput="updatePreview()">
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Website URL</label>
+            <input type="url" id="websiteUrl" class="input-field" placeholder="https://acme.com">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Industry</label>
+              <select id="industry" class="input-field">
+                <option value="">Select...</option>
+                <option value="ecommerce">eCommerce / D2C</option>
+                <option value="saas">SaaS</option>
+                <option value="edtech">EdTech</option>
+                <option value="fintech">FinTech</option>
+                <option value="services">Services</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Business Size</label>
+              <select id="businessSize" class="input-field">
+                <option value="solo">Solo</option>
+                <option value="2-10">2-10 Employees</option>
+                <option value="10-50">10-50 Employees</option>
+                <option value="50+">50+ Employees</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: PAYMENT STACK -->
+      <div id="step-2" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Payment Stack</h1>
+        <p class="text-slate-400 mb-8">Which gateways do you use?</p>
+
+        <div class="space-y-8">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Gateways (Select all)</label>
+            <div class="flex flex-wrap gap-2" id="gatewayContainer">
+              <!-- JS Generated -->
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Monthly Txns</label>
+              <select id="monthlyVolume" class="input-field">
+                <option value="<100">&lt; 100</option>
+                <option value="100-1k">100 - 1k</option>
+                <option value="1k-10k">1k - 10k</option>
+                <option value="10k+">10k+</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Monthly GMV</label>
+              <select id="monthlyGmv" class="input-field">
+                <option value="<1L">&lt; ₹1 Lakh</option>
+                <option value="1-10L">₹1 - 10 Lakh</option>
+                <option value="10-50L">₹10 - 50 Lakh</option>
+                <option value="50L+">₹50 Lakh+</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: RECOVERY PREFS -->
+      <div id="step-3" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Recovery Preferences</h1>
+        <p class="text-slate-400 mb-8">How should we reach out?</p>
+
+        <div class="space-y-8">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Channels</label>
+            <div class="flex gap-4">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="whatsapp"
+                  class="accent-tinko-orange channel-check" checked onchange="updatePreview()"> WhatsApp</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="sms"
+                  class="accent-tinko-orange channel-check" onchange="updatePreview()"> SMS</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="email"
+                  class="accent-tinko-orange channel-check" onchange="updatePreview()"> Email</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Destination</label>
+            <div class="flex gap-2">
+              <button type="button" class="pill-btn active" onclick="setDest(this, 'customer')">Direct to
+                Customer</button>
+              <button type="button" class="pill-btn" onclick="setDest(this, 'internal')">Internal Team Only</button>
+              <button type="button" class="pill-btn" onclick="setDest(this, 'both')">Both</button>
+            </div>
+            <input type="hidden" id="recoveryDest" value="customer">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: TECHNICAL SETUP -->
+      <div id="step-4" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Technical Setup</h1>
+        <p class="text-slate-400 mb-8">Connect your gateways.</p>
+
+        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 mb-6">
+          <label class="block text-xs uppercase text-slate-500 font-bold mb-1">Your Webhook URL</label>
+          <div class="flex items-center gap-2">
+            <code
+              class="text-tinko-orange text-sm bg-slate-900 px-2 py-1 rounded flex-1">https://api.tinko.in/webhook/wh_123456789</code>
+            <button class="text-xs text-slate-400 hover:text-white"><i class="fas fa-copy"></i></button>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Add this to your gateway's webhook settings.</p>
+        </div>
+
+        <div id="gatewayConfigContainer" class="space-y-6">
+          <!-- Dynamic Gateway Configs will appear here -->
+          <p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see configuration here.</p>
+        </div>
+      </div>
+
+      <!-- STEP 5: BRANDING -->
+      <div id="step-5" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Notifications & Branding</h1>
+        <p class="text-slate-400 mb-8">Customize how you appear to customers.</p>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Brand Name (Sender Name)</label>
+            <input type="text" id="brandName" class="input-field" placeholder="e.g. Acme Support"
+              oninput="updatePreview()">
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Support Email</label>
+            <input type="email" id="supportEmail" class="input-field" placeholder="support@acme.com">
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Reply-To Email</label>
+            <input type="email" id="replyToEmail" class="input-field" placeholder="same as support">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: TEAMS -->
+      <div id="step-6" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Internal Team</h1>
+        <p class="text-slate-400 mb-8">Who should we alert for issues?</p>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Tech Contact Email</label>
+            <input type="email" id="techEmail" class="input-field">
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Finance Contact Email</label>
+            <input type="email" id="financeEmail" class="input-field">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: COMPLIANCE -->
+      <div id="step-7" class="step-content hidden">
+        <h1 class="text-3xl font-bold mb-2">Compliance & Access</h1>
+        <p class="text-slate-400 mb-8">Final details.</p>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">GST Number <span
+                class="text-slate-600">(Optional)</span></label>
+            <input type="text" id="gstNumber" class="input-field" placeholder="22AAAAA0000A1Z5">
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Billing Email</label>
+            <input type="email" id="billingEmail" class="input-field">
+          </div>
+
+          <div class="pt-4">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" id="termsCheck" class="w-5 h-5 accent-tinko-orange">
+              <span class="text-sm text-slate-300">I accept the <a href="#" class="text-tinko-orange">Terms of
+                  Service</a> & Privacy Policy.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION BUTTONS -->
+      <div
+        class="fixed bottom-0 left-0 md:left-64 right-0 md:right-[400px] bg-slate-900 border-t border-slate-800 p-4 flex justify-between items-center z-50">
+        <button id="prevBtn" onclick="changeStep(-1)" class="text-slate-400 hover:text-white px-4 py-2 hidden">←
+          Back</button>
+        <button id="nextBtn" onclick="changeStep(1)"
+          class="bg-tinko-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg ml-auto">Next
+          Step →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: LIVE PREVIEW -->
+  <div
+    class="w-[400px] bg-slate-950 border-l border-slate-800 hidden lg:flex flex-col items-center justify-center p-8 relative">
+    <div class="absolute top-8 left-0 w-full text-center">
+      <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Live Preview</p>
+      <div class="flex justify-center gap-2">
+        <button class="text-xs bg-slate-800 text-white px-3 py-1 rounded-full"
+          onclick="setPreviewMode('whatsapp')">WhatsApp</button>
+        <button class="text-xs text-slate-500 px-3 py-1 rounded-full hover:text-white"
+          onclick="setPreviewMode('email')">Email</button>
       </div>
     </div>
 
-    <!-- Form Card  -->
-    <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl shadow-2xl p-8 md:p-10">
-
-      <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Welcome to Tinko! 👋</h1>
-      <p class="text-slate-400 mb-8">Tell us about your business so we can help you recover lost revenue.</p>
-
-      <form id="onboardingForm" class="space-y-6">
-
-        <!-- Business Name -->
+    <!-- PHONE MOCKUP -->
+    <div class="preview-phone shadow-2xl relative">
+      <!-- WhatsApp Header -->
+      <div class="bg-[#075E54] text-white p-3 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs">Logo</div>
         <div>
-          <label for="businessName" class="block text-sm font-semibold text-slate-300 mb-2">
-            Business Name <span class="text-red-400">*</span>
-          </label>
-          <input id="businessName" type="text" required placeholder="e.g., Acme Store"
-            class="w-full px-4 py-3 bg-slate-900/80 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-tinko-orange transition" />
+          <p class="text-sm font-bold" id="previewBrandName">Tinko Support</p>
+          <p class="text-[10px] opacity-80">Business Account</p>
         </div>
+      </div>
 
-        <!-- Phone Number -->
-        <div>
-          <label for="phone" class="block text-sm font-semibold text-slate-300 mb-2">
-            Business Phone <span class="text-red-400">*</span>
-          </label>
-          <input id="phone" type="tel" required placeholder="+91 98765 43210"
-            class="w-full px-4 py-3 bg-slate-900/80 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-tinko-orange transition" />
+      <!-- Chat Area -->
+      <div class="bg-[#ECE5DD] h-full p-4 pt-8">
+        <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-[85%] text-sm text-gray-800 relative">
+          <p class="font-bold text-xs text-orange-600 mb-1">Payment Failed</p>
+          <p class="mb-2">Hi there! We noticed your payment of <span class="font-bold">₹4,999</span> at <span
+              id="previewBusinessName" class="font-bold">Acme Store</span> failed just now.</p>
+          <p class="mb-3">Don't worry, we saved your cart. Click below to retry securely:</p>
+          <a href="#" class="block text-center bg-[#00A884] text-white py-2 rounded font-medium text-xs">Pay Now (Secure
+            Link)</a>
+          <p class="text-[10px] text-gray-400 text-right mt-1">10:42 AM</p>
         </div>
-
-        <!-- Payment Gateway -->
-        <div>
-          <label for="gateway" class="block text-sm font-semibold text-slate-300 mb-2">
-            Primary Payment Gateway <span class="text-red-400">*</span>
-          </label>
-          <select id="gateway" required
-            class="w-full px-4 py-3 bg-slate-900/80 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-tinko-orange transition">
-            <option value="">Select your gateway</option>
-            <option value="razorpay">Razorpay</option>
-            <option value="stripe">Stripe</option>
-            <option value="cashfree">Cashfree</option>
-            <option value="payu">PayU</option>
-            <option value="phonepe">PhonePe</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <!-- Website URL -->
-        <div>
-          <label for="website" class="block text-sm font-semibold text-slate-300 mb-2">
-            Website URL <span class="text-slate-500 text-xs">(Optional)</span>
-          </label>
-          <input id="website" type="url" placeholder="https://yourstore.com"
-            class="w-full px-4 py-3 bg-slate-900/80 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-tinko-orange transition" />
-        </div>
-
-        <!-- Monthly Transaction Volume -->
-        <div>
-          <label for="volume" class="block text-sm font-semibold text-slate-300 mb-2">
-            Estimated Monthly Transactions
-          </label>
-          <select id="volume"
-            class="w-full px-4 py-3 bg-slate-900/80 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-tinko-orange transition">
-            <option value="">Select range</option>
-            <option value="0-100">0 - 100</option>
-            <option value="100-500">100 - 500</option>
-            <option value="500-1000">500 - 1,000</option>
-            <option value="1000-5000">1,000 - 5,000</option>
-            <option value="5000+">5,000+</option>
-          </select>
-        </div>
-
-        <!-- Error Message -->
-        <p id="errorMessage" class="text-sm text-red-400 hidden"></p>
-
-        <!-- Success Message -->
-        <p id="successMessage" class="text-sm text-emerald-400 hidden"></p>
-
-        <!-- Submit Button -->
-        <button id="submitBtn" type="submit"
-          class="w-full bg-tinko-orange hover:bg-orange-600 text-white font-semibold py-4 rounded-lg shadow-lg transition duration-200">
-          Complete Setup
-        </button>
-
-      </form>
-
-      <p class="text-xs text-slate-500 text-center mt-6">
-        By continuing, you agree to our Terms of Service and Privacy Policy.
-      </p>
-
+      </div>
     </div>
-    // Get form values
-    const businessName = document.getElementById("businessName").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const gateway = document.getElementById("gateway").value;
-    const website = document.getElementById("website").value.trim();
-    const volume = document.getElementById("volume").value;
+  </div>
 
-    // Validation
-    if (!businessName || !phone || !gateway) {
-    showError("Please fill in all required fields.");
-    return;
-    }
+  <script>
+    // ------------------------------------------------------
+    // STATE
+    // ------------------------------------------------------
+    let currentStep = 1;
+    const totalSteps = 7;
+    const selectedGateways = new Set();
+    const GATEWAYS = ["Razorpay", "Stripe", "Cashfree", "PayU", "PhonePe", "Paytm", "CCAvenue", "Juspay", "Custom Gateway (Not listed here?)"];
 
-    // Get token from localStorage
-    const token = localStorage.getItem("tinko_access_token");
-    if (!token) {
-    showError("Authentication token not found. Please log in again.");
-    setTimeout(() => {
-    window.location.href = "../index.html";
-    }, 2000);
-    return;
-    }
-
-    // Disable button
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Setting up your account...";
-
-    try {
-    const response = await fetch(API_BASE + "/v1/customer/onboarding", {
-    method: "POST",
-    headers: {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({
-    business_name: businessName,
-    phone: phone,
-    payment_gateway: gateway,
-    website: website || null,
-    monthly_volume: volume || null
-    })
+    // ------------------------------------------------------
+    // INIT
+    // ------------------------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      renderGateways();
+      updatePreview();
     });
 
-    if (response.ok) {
-    showSuccess("Profile created successfully! Redirecting to dashboard...");
-    setTimeout(() => {
-    window.location.href = "index.html";
-    }, 1500);
-    } else {
-    const errorData = await response.json();
-    showError(errorData.detail || "Failed to create profile. Please try again.");
-    }
-    } catch (err) {
-    console.error("ONBOARDING ERROR:", err);
-    showError("Could not connect to server. Please check your connection.");
-    } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Complete Setup";
-    }
-    });
-
-    function showError(msg) {
-    errorMessage.textContent = msg;
-    errorMessage.classList.remove("hidden");
-    successMessage.classList.add("hidden");
+    function renderGateways() {
+      const container = document.getElementById("gatewayContainer");
+      GATEWAYS.forEach(gw => {
+        const btn = document.createElement("button");
+        btn.className = "pill-btn";
+        btn.textContent = gw;
+        btn.onclick = () => {
+          if (selectedGateways.has(gw)) {
+            selectedGateways.delete(gw);
+            btn.classList.remove("active");
+          } else {
+            selectedGateways.add(gw);
+            btn.classList.add("active");
+          }
+          renderGatewayConfig();
+        };
+        container.appendChild(btn);
+      });
     }
 
-    function showSuccess(msg) {
-    successMessage.textContent = msg;
-    successMessage.classList.remove("hidden");
-    errorMessage.classList.add("hidden");
-    }
-    </script>
+    function renderGatewayConfig() {
+      const container = document.getElementById("gatewayConfigContainer");
+      container.innerHTML = "";
 
+      // Add Documentation Link
+      const guideLink = document.createElement("div");
+      guideLink.className = "mb-6 text-right";
+      guideLink.innerHTML = `<a href="gateway-guide.html" target="_blank" class="text-tinko-orange text-sm hover:underline flex items-center justify-end gap-2"><i class="fas fa-book"></i> How to find these details?</a>`;
+      container.appendChild(guideLink);
+
+      if (selectedGateways.size === 0) {
+        container.innerHTML += '<p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see configuration here.</p>';
+        return;
+      }
+
+      selectedGateways.forEach(gw => {
+        const div = document.createElement("div");
+        div.className = "bg-slate-800/50 p-4 rounded-lg border border-slate-700 mb-4";
+
+        if (gw === "Custom Gateway (Not listed here?)") {
+          div.innerHTML = `
+            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-gray-500"></div> Custom Gateway</h3>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Gateway Name & Details</label>
+              <textarea class="input-field text-sm" rows="3" placeholder="e.g. Worldline, BillDesk. Please enter the name and we will contact you for integration."></textarea>
+            </div>
+          `;
+        } else {
+          div.innerHTML = `
+            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div> ${gw} Configuration</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs text-slate-400 mb-1">Key ID / API Key</label>
+                <input type="password" class="input-field text-sm" placeholder="${gw} Key ID">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-400 mb-1">Key Secret</label>
+                <input type="password" class="input-field text-sm" placeholder="${gw} Secret">
+              </div>
+            </div>
+            <div class="mt-3 text-xs text-slate-500">
+              <p class="mb-1"><strong>Required Webhook Events:</strong></p>
+              <div class="flex gap-2 flex-wrap">
+                <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.failed</span>
+                <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.authorized</span>
+              </div>
+            </div>
+          `;
+        }
+        container.appendChild(div);
+      });
+    }
+
+    // ------------------------------------------------------
+    // NAVIGATION
+    // ------------------------------------------------------
+    function changeStep(dir) {
+      // Validate current step before moving next
+      if (dir === 1 && !validateStep(currentStep)) return;
+
+      const newStep = currentStep + dir;
+      if (newStep < 1 || newStep > totalSteps) {
+        if (newStep > totalSteps) submitForm();
+        return;
+      }
+
+      // Hide current
+      document.getElementById(`step-${currentStep}`).classList.add("hidden");
+      document.getElementById(`nav-step-${currentStep}`).classList.replace("step-active", "step-inactive");
+
+      // Show new
+      document.getElementById(`step-${newStep}`).classList.remove("hidden");
+      document.getElementById(`nav-step-${newStep}`).classList.replace("step-inactive", "step-active");
+
+      currentStep = newStep;
+
+      // Button State
+      document.getElementById("prevBtn").classList.toggle("hidden", currentStep === 1);
+      document.getElementById("nextBtn").textContent = currentStep === totalSteps ? "Finish Setup" : "Next Step →";
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        if (!document.getElementById("businessName").value) return alert("Business Name is required");
+      }
+      if (step === 2) {
+        if (selectedGateways.size === 0) return alert("Select at least one gateway");
+      }
+      if (step === 7) {
+        if (!document.getElementById("termsCheck").checked) return alert("Please accept Terms & Privacy Policy");
+      }
+      return true;
+    }
+
+    // ------------------------------------------------------
+    // PREVIEW LOGIC
+    // ------------------------------------------------------
+    function updatePreview() {
+      const name = document.getElementById("businessName").value || "Acme Store";
+      const brand = document.getElementById("brandName").value || name;
+
+      document.getElementById("previewBusinessName").textContent = name;
+      document.getElementById("previewBrandName").textContent = brand;
+    }
+
+    function setDest(btn, val) {
+      document.getElementById("recoveryDest").value = val;
+      // Update UI
+      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    }
+
+    // ------------------------------------------------------
+    // SUBMIT
+    // ------------------------------------------------------
+    async function submitForm() {
+      const btn = document.getElementById("nextBtn");
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+
+      const API_BASE = (() => {
+        const h = window.location.hostname;
+        if (!h || h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:8000";
+        return 'https://tinko-clean-backend.onrender.com';
+      })();
+
+      const payload = {
+        business_name: document.getElementById("businessName").value,
+        website: document.getElementById("websiteUrl").value,
+        industry: document.getElementById("industry").value,
+        business_size: document.getElementById("businessSize").value,
+
+        payment_gateways: Array.from(selectedGateways),
+        monthly_volume: document.getElementById("monthlyVolume").value,
+        monthly_gmv: document.getElementById("monthlyGmv").value,
+
+        recovery_channels: Array.from(document.querySelectorAll(".channel-check:checked")).map(c => c.value),
+        recovery_destination: document.getElementById("recoveryDest").value,
+
+        // Mock credentials collection (in real app, gather from inputs)
+        gateway_credentials: {},
+
+        brand_name: document.getElementById("brandName").value,
+        support_email: document.getElementById("supportEmail").value,
+        reply_to_email: document.getElementById("replyToEmail").value,
+
+        team_contacts: {
+          tech: document.getElementById("techEmail").value,
+          finance: document.getElementById("financeEmail").value
+        },
+
+        gst_number: document.getElementById("gstNumber").value,
+        billing_email: document.getElementById("billingEmail").value,
+
+        // Required by schema but not in form (auto-filled)
+        phone: "9999999999"
+      };
+
+      const token = localStorage.getItem("tinko_access_token");
+
+      try {
+        const res = await fetch(`${API_BASE}/v1/customer/onboarding`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          window.location.href = "index.html";
+        } else {
+          const d = await res.json();
+          alert("Error: " + (d.detail || "Setup failed"));
+          btn.disabled = false;
+          btn.textContent = "Finish Setup";
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Network Error");
+        btn.disabled = false;
+      }
+    }
+  </script>
 </body>
 
 </html>

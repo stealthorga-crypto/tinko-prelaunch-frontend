@@ -1,4 +1,48 @@
+// --------------------------------
+// CONFIGURATION & CONSTANTS
+// --------------------------------
+const API_BASE = (() => {
+  const hostname = window.location.hostname;
+
+  // If accessing via mobile (IP address), use laptop's IP
+  // But if hostname is empty (file://) or localhost, use local backend
+  if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1') {
+    return "http://127.0.0.1:8000";
+  }
+
+  // Otherwise (e.g. deployed on Vercel/Render), use the cloud backend
+  return 'https://tinko-clean-backend.onrender.com';
+})();
+
+const PROFILE_URL = `${API_BASE}/v1/customer/profile`;
+
+console.log('Using API Base:', API_BASE);
+
+// --------------------------------
+// DOM ELEMENTS
+// --------------------------------
+const step1 = document.getElementById("step1");
 const step2 = document.getElementById("step2");
+const emailInput = document.getElementById("login_email");
+const otpInput = document.getElementById("otp_code");
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+const resendOtp = document.getElementById("resendOtp");
+const loginMessage = document.getElementById("loginMessage");
+
+// --------------------------------
+// MESSAGE HELPER
+// --------------------------------
+function setMessage(msg, isError = false) {
+  if (loginMessage) {
+    loginMessage.textContent = msg;
+    loginMessage.style.color = isError ? "#f87171" : "#34d399";
+  }
+}
+
+// --------------------------------
+// SEND OTP
+// --------------------------------
 if (sendOtpBtn) {
   sendOtpBtn.addEventListener("click", async () => {
     const email = emailInput?.value.trim();
