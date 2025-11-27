@@ -1,8 +1,20 @@
-// auth.js
+// ===============================
+// AUTH.JS — LOCAL TESTING VERSION
+// ===============================
 
-const API_BASE = "https://tinko-clean-backend.onrender.com"; 
-// change if you deploy backend somewhere else
+console.log("🔥 AUTH FILE LOADED FROM:", window.location.href);
 
+// --------------------------------
+// LOCAL BACKEND
+// --------------------------------
+const API_BASE = "http://127.0.0.1:8000";
+
+// Profile check
+const PROFILE_URL = API_BASE + "/v1/customer/profile";
+
+// --------------------------------
+// DOM Elements
+// --------------------------------
 const step1 = document.getElementById("step1");
 const step2 = document.getElementById("step2");
 
@@ -14,6 +26,9 @@ const sendOtpBtn = document.getElementById("sendOtpBtn");
 const verifyOtpBtn = document.getElementById("verifyOtpBtn");
 const resendOtp = document.getElementById("resendOtp");
 
+// --------------------------------
+// UI Helper
+// --------------------------------
 function setMessage(msg, isError = false) {
   if (!loginMessage) return;
   loginMessage.textContent = msg;
@@ -22,21 +37,19 @@ function setMessage(msg, isError = false) {
     : "text-sm text-emerald-300 mt-2";
 }
 
+// --------------------------------
 // SEND OTP
+// --------------------------------
 if (sendOtpBtn) {
   sendOtpBtn.addEventListener("click", async () => {
-    const email = (emailInput?.value || "").trim();
-
-    if (!email) {
-      alert("Enter a valid email");
-      return;
-    }
+    const email = emailInput?.value.trim();
+    if (!email) return alert("Enter a valid email");
 
     sendOtpBtn.disabled = true;
     sendOtpBtn.textContent = "Sending...";
 
     try {
-      const res = await fetch(`${API_BASE}/v1/auth/v1/auth/email/send-otp`, {
+      const res = await fetch(`${API_BASE}/v1/auth/email/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -50,7 +63,7 @@ if (sendOtpBtn) {
         setMessage("Failed to send OTP. Please try again.", true);
       }
     } catch (err) {
-      console.error(err);
+      console.error("SEND OTP ERROR:", err);
       setMessage("Backend unreachable. Check API.", true);
     } finally {
       sendOtpBtn.disabled = false;
@@ -59,36 +72,39 @@ if (sendOtpBtn) {
   });
 }
 
+// --------------------------------
 // VERIFY OTP
+// --------------------------------
 if (verifyOtpBtn) {
   verifyOtpBtn.addEventListener("click", async () => {
-    const otp = (otpInput?.value || "").trim();
-    const email = (emailInput?.value || "").trim();
+    const otp = otpInput?.value.trim();
+    const email = emailInput?.value.trim();
 
-    if (!otp) {
-      alert("Enter OTP");
-      return;
-    }
+    if (!otp) return alert("Enter OTP");
 
     verifyOtpBtn.disabled = true;
     verifyOtpBtn.textContent = "Verifying...";
 
     try {
-      const res = await fetch(`${API_BASE}/v1/auth/v1/auth/email/verify-otp`, {
+      const res = await fetch(`${API_BASE}/v1/auth/email/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
       });
 
-      if (res.ok) {
+      const data = await res.json();
+      console.log("Verify OTP Response:", data);
+
+      const accessToken = data.access_token;
+
+      if (accessToken) {
         setMessage("Login successful! Redirecting...");
-        // TODO: change to your real dashboard route
-        window.location.href = "/dashboard.html";
+        await handlePostLoginRedirect(accessToken);
       } else {
-        setMessage("Invalid OTP. Please try again.", true);
+        setMessage("Login failed: no token received.", true);
       }
     } catch (err) {
-      console.error(err);
+      console.error("VERIFY OTP ERROR:", err);
       setMessage("Backend unreachable. Check API.", true);
     } finally {
       verifyOtpBtn.disabled = false;
@@ -97,11 +113,40 @@ if (verifyOtpBtn) {
   });
 }
 
+// --------------------------------
 // RESEND OTP
+// --------------------------------
 if (resendOtp) {
   resendOtp.addEventListener("click", () => {
-    if (sendOtpBtn) {
-      sendOtpBtn.click();
-    }
+    if (sendOtpBtn) sendOtpBtn.click();
   });
 }
+
+// --------------------------------
+// REDIRECT AFTER LOGIN
+// --------------------------------
+async function handlePostLoginRedirect(token) {
+  try {
+    localStorage.setItem("tinko_access_token", token);
+
+    const res = await fetch(PROFILE_URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
+    });
+
+    if (res.ok) {
+      window.location.href = "dashboard/index.html";
+    } else if (res.status === 404) {
+      window.location.href = "dashboard/onboarding.html";
+    } else {
+      window.location.href = "dashboard/index.html";
+    }
+  } catch (err) {
+    console.error("POST LOGIN REDIRECT ERROR:", err);
+    window.location.href = "dashboard/index.html";
+  }
+}
+  

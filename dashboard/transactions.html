@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tinko • Transactions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --orange: #de6b06;
+      --bg: #0b1220;
+      --card: #111827;
+      --text: #f9fafb;
+      --border: #1f2937;
+      --muted: #6b7280;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      font-family: system-ui;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    tr:hover {
+      background: rgba(255,255,255,0.04);
+      cursor: pointer;
+    }
+    .btn {
+      background: var(--orange);
+      padding: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--bg);
+    }
+    .logout {
+      background: #1f2937 !important;
+      color: var(--muted) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <a class="btn" href="index.html">← Dashboard</a>
+    <button class="btn logout" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="card">
+    <h2>All Transactions</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ref</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="txBody"></tbody>
+    </table>
+  </div>
+
+  <script src="auth-guard.js"></script>
+  <script src="logout.js"></script>
+
+  <script>
+    const API = "http://127.0.0.1:8000";
+    const token = localStorage.getItem("tinko_access_token");
+
+    async function loadTx() {
+      const res = await fetch(`${API}/v1/customer/transactions`, {
+        headers: { Authorization: "Bearer " + token }
+      });
+      const tx = await res.json();
+      render(tx);
+    }
+
+    function render(list) {
+      const tbody = document.getElementById("txBody");
+      tbody.innerHTML = "";
+
+      list.forEach(t => {
+        const row = document.createElement("tr");
+        row.onclick = () => window.location.href = `transaction.html?ref=${t.transaction_ref}`;
+        row.innerHTML = `
+          <td>${t.transaction_ref}</td>
+          <td>₹${t.amount}</td>
+          <td>${t.status}</td>
+          <td>${new Date(t.created_at).toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    loadTx();
+  </script>
+</body>
+</html>
