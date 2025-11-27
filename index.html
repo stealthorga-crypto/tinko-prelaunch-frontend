@@ -58,6 +58,12 @@
 
     <p class="text-sm font-semibold tracking-[0.18em] text-tinko-orange mb-4">THE MOMENT THAT MATTERS — SAVED</p>
 
+    <div
+      class="inline-flex items-center gap-2 bg-orange-50 border border-orange-100 rounded-full px-3 py-1 mb-6 animate-pulse">
+      <span class="w-2 h-2 rounded-full bg-tinko-orange"></span>
+      <span class="text-xs font-bold text-orange-800">Limited Offer: Get 1 Month Free Recovery</span>
+    </div>
+
     <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
       Your customer tried to pay.<br />
       <span class="text-tinko-orange">Tinko makes sure they succeed.</span>
@@ -129,6 +135,105 @@
       </div>
     </div>
   </section>
+
+
+  <!-- CALCULATOR SECTION -->
+  <section id="calculator" class="py-20 bg-slate-900 text-white border-y border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+
+      <span
+        class="inline-block py-1 px-3 rounded-full bg-tinko-orange/20 text-tinko-orange text-xs font-bold tracking-wider mb-6 border border-tinko-orange/30">
+        REVENUE RECOVERY ENGINE
+      </span>
+
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">
+        See how much you are losing.
+      </h2>
+      <p class="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
+        Based on industry average failure rates (20%) and Tinko's recovery performance.
+      </p>
+
+      <div class="bg-slate-800 rounded-2xl p-8 md:p-12 shadow-2xl border border-slate-700">
+
+        <!-- INPUT -->
+        <div class="mb-12">
+          <label class="block text-sm font-semibold text-slate-400 mb-4 uppercase tracking-wider">
+            Your Monthly Revenue (GMV)
+          </label>
+          <div class="flex items-center justify-center gap-4 text-4xl md:text-5xl font-bold text-white mb-6">
+            <span>₹</span>
+            <span id="revenueDisplay">10,00,000</span>
+          </div>
+          <input type="range" id="revenueRange" min="100000" max="5000000" step="100000" value="1000000"
+            class="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-tinko-orange hover:accent-orange-500 transition-all">
+          <div class="flex justify-between text-xs text-slate-500 mt-2 font-mono">
+            <span>₹1L</span>
+            <span>₹50L+</span>
+          </div>
+        </div>
+
+        <!-- RESULTS GRID -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="p-6 rounded-xl bg-rose-500/10 border border-rose-500/20">
+            <p class="text-rose-400 text-sm font-semibold mb-1">Monthly Revenue Lost</p>
+            <p class="text-3xl font-bold text-rose-500">₹<span id="lostRevenue">2,00,000</span></p>
+            <p class="text-xs text-rose-400/60 mt-2">~20% failure rate</p>
+          </div>
+          <div class="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">
+              PURE PROFIT
+            </div>
+            <p class="text-emerald-400 text-sm font-semibold mb-1">Tinko Recovers</p>
+            <p class="text-3xl font-bold text-emerald-500">₹<span id="recoveredRevenue">1,00,000</span></p>
+            <p class="text-xs text-emerald-400/60 mt-2">Money back in your bank</p>
+          </div>
+        </div>
+
+        <!-- LEAD MAGNET -->
+        <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+          <h3 class="text-xl font-bold mb-2">Stop the leak today.</h3>
+          <p class="text-slate-400 text-sm mb-6">Get 1 month of free recovery. No credit card required.</p>
+
+          <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            onsubmit="event.preventDefault(); alert('Spot claimed! We will contact you shortly.');">
+            <input type="email" placeholder="Enter your work email" required
+              class="flex-1 px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-tinko-orange transition-colors">
+            <button type="submit"
+              class="px-6 py-3 rounded-lg bg-tinko-orange hover:bg-orange-600 text-white font-bold shadow-lg shadow-orange-500/20 transition-all whitespace-nowrap">
+              Claim Free Slot
+            </button>
+          </form>
+          <p class="text-[10px] text-slate-500 mt-3">Limited to first 100 merchants this month.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const revenueRange = document.getElementById('revenueRange');
+    const revenueDisplay = document.getElementById('revenueDisplay');
+    const lostRevenue = document.getElementById('lostRevenue');
+    const recoveredRevenue = document.getElementById('recoveredRevenue');
+
+    function formatCurrency(num) {
+      return new Intl.NumberFormat('en-IN').format(num);
+    }
+
+    function updateCalculator() {
+      const gmv = parseInt(revenueRange.value);
+      const lost = Math.round(gmv * 0.20); // 20% failure
+      const recovered = Math.round(lost * 0.50); // 50% recovery
+
+      revenueDisplay.textContent = formatCurrency(gmv);
+      lostRevenue.textContent = formatCurrency(lost);
+      recoveredRevenue.textContent = formatCurrency(recovered);
+    }
+
+    revenueRange.addEventListener('input', updateCalculator);
+    // Init
+    updateCalculator();
+  </script>
 
 
   <!-- SOLUTION -->
