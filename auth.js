@@ -47,20 +47,20 @@ function setMode(mode) {
 
   if (mode === "login") {
     // UI: Active Login
-    tabLogin.classList.add("bg-tinko-orange", "text-white");
+    tabLogin.classList.add("bg-tinko-blue", "text-white");
     tabLogin.classList.remove("text-slate-300");
 
-    tabSignup.classList.remove("bg-tinko-orange", "text-white");
+    tabSignup.classList.remove("bg-tinko-blue", "text-white");
     tabSignup.classList.add("text-slate-300");
 
     authHeader.textContent = "Welcome Back";
     sendOtpBtn.textContent = "Send Login OTP";
   } else {
     // UI: Active Signup
-    tabSignup.classList.add("bg-tinko-orange", "text-white");
+    tabSignup.classList.add("bg-tinko-blue", "text-white");
     tabSignup.classList.remove("text-slate-300");
 
-    tabLogin.classList.remove("bg-tinko-orange", "text-white");
+    tabLogin.classList.remove("bg-tinko-blue", "text-white");
     tabLogin.classList.add("text-slate-300");
 
     authHeader.textContent = "Get Started";

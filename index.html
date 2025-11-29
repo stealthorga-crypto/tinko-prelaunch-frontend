@@ -2,428 +2,527 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Tinko — The Moment That Matters, Saved.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
     content="Tinko recovers lost revenue from failed payments using intelligent retry links and respectful follow-up messaging.">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            "tinko-orange": "#DE6B06",
-            "tinko-dark": "#0b1220",
-            "tinko-muted": "#6b7280"
+            tinko: {
+              blue: '#0044CC',
+              dark: '#002a80',
+              light: '#E6F0FF',
+              text: '#0F172A',
+              gray: '#64748B'
+            }
           },
           fontFamily: {
-            jakarta: ['"Plus Jakarta Sans"', "sans-serif"]
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
           }
         }
       }
     }
   </script>
-
   <style>
-    body {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      background: linear-gradient(140deg, #fff7eb, #f5f5f5, #ececec);
+    /* Custom Styles for Slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0044CC;
+      cursor: pointer;
+      margin-top: -10px;
+      box-shadow: 0 4px 6px -1px rgba(0, 68, 204, 0.4);
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: #E2E8F0;
+      border-radius: 2px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #0044CC, #2563EB);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Animation Classes */
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 
-<body class="text-tinko-dark">
-
-  <!-- NAVBAR -->
-  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200">
-    <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
-      <div class="font-extrabold tracking-[0.20em] text-tinko-orange text-xl">TINKO</div>
-      <a href="#login"
-        class="rounded-full bg-tinko-orange px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 shadow">
-        Login / Signup
-      </a>
-    </div>
-  </header>
-
-
-  <!-- HERO -->
-  <section class="max-w-6xl mx-auto px-4 py-20">
-
-    <p class="text-sm font-semibold tracking-[0.18em] text-tinko-orange mb-4">THE MOMENT THAT MATTERS — SAVED</p>
-
-    <div
-      class="inline-flex items-center gap-2 bg-orange-50 border border-orange-100 rounded-full px-3 py-1 mb-6 animate-pulse">
-      <span class="w-2 h-2 rounded-full bg-tinko-orange"></span>
-      <span class="text-xs font-bold text-orange-800">Limited Offer: Get 1 Month Free Recovery</span>
-    </div>
-
-    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-      Your customer tried to pay.<br />
-      <span class="text-tinko-orange">Tinko makes sure they succeed.</span>
-    </h1>
-
-    <p class="max-w-2xl text-lg text-tinko-muted mb-10">
-      Every failed payment is lost intent —
-      Tinko detects failures instantly and brings them back with a clean retry link sent through trusted channels.
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4">
-      <a href="#login"
-        class="bg-tinko-orange hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg">
-        Login with OTP
-      </a>
-      <a href="#solution"
-        class="border border-gray-300 hover:border-tinko-orange hover:text-tinko-orange text-tinko-dark font-semibold px-8 py-4 rounded-xl">
-        See How It Works
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-14 text-center sm:text-left">
-      <div>
-        <p class="text-2xl font-bold">1 in 3</p>
-        <p class="text-sm text-tinko-muted">online payments fail</p>
-      </div>
-      <div>
-        <p class="text-2xl font-bold">70%</p>
-        <p class="text-sm text-tinko-muted">customers never retry</p>
-      </div>
-      <div>
-        <p class="text-2xl font-bold">Pure Upside</p>
-        <p class="text-sm text-tinko-muted">revenue you already earned</p>
+<body class="font-sans text-tinko-text antialiased bg-white">
+  <!-- NAVIGATION -->
+  <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="#" class="flex-shrink-0 flex items-center gap-2">
+          <div class="w-8 h-8 bg-tinko-blue rounded-lg flex items-center justify-center text-white font-bold text-xl">
+            T</div>
+          <span class="font-bold text-2xl tracking-tight text-tinko-blue">Tinko.</span>
+        </a>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#how-it-works" class="text-sm font-medium text-gray-600 hover:text-tinko-blue transition">How it
+            Works</a>
+          <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-tinko-blue transition">Pricing</a>
+          <a href="#roi-calculator"
+            class="text-sm font-medium text-gray-600 hover:text-tinko-blue transition">Calculator</a>
+          <!-- Auth Links -->
+          <div class="flex items-center gap-4 border-l border-gray-200 pl-8">
+            <a href="dashboard/login.html"
+              class="text-sm font-medium text-gray-900 hover:text-tinko-blue transition">Login</a>
+            <a href="dashboard/login.html?intent=signup"
+              class="bg-tinko-blue text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-tinko-dark transition shadow-lg shadow-blue-500/30">Start
+              Recovering</a>
+          </div>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+            class="text-gray-600 hover:text-tinko-blue">
+            <i class="ph ph-list text-2xl"></i>
+          </button>
+        </div>
       </div>
     </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100">
+      <div class="px-4 pt-2 pb-6 space-y-2">
+        <a href="#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-600">How it Works</a>
+        <a href="#pricing" class="block px-3 py-2 text-base font-medium text-gray-600">Pricing</a>
+        <a href="#roi-calculator" class="block px-3 py-2 text-base font-medium text-gray-600">Calculator</a>
+        <div class="border-t border-gray-100 mt-4 pt-4">
+          <a href="dashboard/login.html" class="block px-3 py-2 text-base font-medium text-gray-900">Login</a>
+          <a href="dashboard/login.html?intent=signup"
+            class="block w-full text-center mt-2 bg-tinko-blue text-white px-5 py-3 rounded-lg font-semibold">Start
+            Recovering</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
+  <!-- HERO SECTION -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Content -->
+        <div class="text-center lg:text-left fade-in-up">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-tinko-blue text-xs font-semibold mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <span class="ml-2">Live System Status: Operational</span>
+          </div>
+
+          <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            Tinko recovers lost revenue <span class="gradient-text">instantly.</span>
+          </h1>
+
+          <p class="text-xl text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+            Our promise is simple: If you don't get paid, neither do we.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="dashboard/login.html?intent=signup"
+              class="bg-tinko-blue text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-tinko-dark transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2">
+              Start Recovering <i class="ph-bold ph-arrow-right"></i>
+            </a>
+            <a href="#how-it-works"
+              class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-full text-base font-bold hover:border-tinko-blue hover:text-tinko-blue transition flex items-center justify-center gap-2">
+              <i class="ph-bold ph-play-circle"></i> See Live Demo
+            </a>
+          </div>
+          <!-- Trust Ticker -->
+          <div class="mt-10 pt-8 border-t border-gray-100">
+            <p class="text-sm text-gray-500 font-medium mb-4">Seamlessly integrates with:</p>
+            <div
+              class="flex flex-wrap justify-center lg:justify-start gap-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+              <span class="text-xl font-bold font-sans text-gray-800 flex items-center gap-1"><i
+                  class="ph-fill ph-check-circle text-blue-600"></i> Razorpay</span>
+              <span class="text-xl font-bold font-sans text-gray-800 flex items-center gap-1"><i
+                  class="ph-fill ph-check-circle text-indigo-600"></i> Stripe</span>
+              <span class="text-xl font-bold font-sans text-gray-800 flex items-center gap-1"><i
+                  class="ph-fill ph-check-circle text-green-600"></i> Shopify</span>
+              <span class="text-xl font-bold font-sans text-gray-800 flex items-center gap-1"><i
+                  class="ph-fill ph-check-circle text-purple-600"></i> WooCommerce</span>
+            </div>
+          </div>
+        </div>
+        <!-- Hero Visual -->
+        <div class="relative hidden lg:block fade-in-up" style="animation-delay: 0.2s;">
+          <div class="absolute -top-20 -right-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50">
+          </div>
+          <div
+            class="relative bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 max-w-md mx-auto transform rotate-[-2deg] hover:rotate-0 transition duration-500">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-50 pb-4">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+              </div>
+              <div class="text-xs font-mono text-gray-400">log_monitor.exe</div>
+            </div>
+            <div class="space-y-4 font-mono text-sm">
+              <div class="flex items-start gap-3 opacity-50">
+                <span class="text-gray-400">10:41:02</span>
+                <div>
+                  <span class="text-green-600">Success</span> Order #4922 Confirmed
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-2 bg-red-50 rounded border border-red-100">
+                <span class="text-red-400">10:42:15</span>
+                <div>
+                  <span class="text-red-600 font-bold">FAILED</span> Order #4923
+                  <div class="text-xs text-red-500 mt-1">Error: Bank Gateway Timeout</div>
+                  <div class="text-xs text-gray-500">Cart Value: ₹4,500</div>
+                </div>
+              </div>
+              <div
+                class="flex items-start gap-3 p-3 bg-blue-50 rounded border border-blue-100 shadow-sm transform scale-105 transition">
+                <span class="text-blue-500">10:42:16</span>
+                <div>
+                  <span class="text-tinko-blue font-bold flex items-center gap-1"><i class="ph-fill ph-lightning"></i>
+                    TINKO DETECTED</span>
+                  <div class="text-xs text-gray-600 mt-1">Generating Recovery Link...</div>
+                  <div class="text-xs text-green-600 font-semibold mt-1 flex items-center gap-1">
+                    <i class="ph-bold ph-whatsapp-logo"></i>
+                    <i class="ph-bold ph-envelope-simple"></i>
+                    WhatsApp & Email Sent
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 opacity-50">
+                <span class="text-gray-400">10:45:30</span>
+                <div>
+                  <span class="text-green-600">RECOVERED</span> Order #4923 Paid via Tinko
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-
-  <!-- PROBLEM -->
-  <section id="problem" class="bg-white border-y border-gray-200 py-20">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">
-        The last step of your funnel is silently leaking money.
-      </h2>
-      <p class="max-w-3xl text-lg text-tinko-muted mb-12">
-        You spent on ads, design, product, logistics.
-        The customer reached checkout. They clicked pay.
-        Then something breaks — OTP timeout, network issue, bank decline, gateway errors.
-        And they simply leave.
-      </p>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-xl bg-rose-50 border border-rose-100">
-          <h3 class="font-semibold text-rose-700 mb-2">A hidden leak</h3>
-          <p class="text-sm text-rose-900">Failed payments don’t appear in GA, Meta Ads, or CRM dashboards. The loss is
-            invisible — but real.</p>
-        </div>
-        <div class="p-6 rounded-xl bg-amber-50 border border-amber-100">
-          <h3 class="font-semibold text-amber-800 mb-2">Nobody owns it</h3>
-          <p class="text-sm text-amber-900">Product thinks it’s payments. Payments think it’s banks. Support says
-            “please retry.” Nobody fixes it.</p>
-        </div>
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
-          <h3 class="font-semibold text-slate-800 mb-2">No manual recovery</h3>
-          <p class="text-sm text-slate-900">Your team cannot manually catch and follow up every failure in real time.
-            It’s impossible at scale.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- CALCULATOR SECTION -->
-  <section id="calculator" class="py-20 bg-slate-900 text-white border-y border-slate-800">
+  <!-- SUNK COST SECTION -->
+  <section class="py-20 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 text-center">
-
-      <span
-        class="inline-block py-1 px-3 rounded-full bg-tinko-orange/20 text-tinko-orange text-xs font-bold tracking-wider mb-6 border border-tinko-orange/30">
-        REVENUE RECOVERY ENGINE
-      </span>
-
-      <h2 class="text-3xl md:text-5xl font-bold mb-6">
-        See how much you are losing.
-      </h2>
-      <p class="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
-        Based on industry average failure rates (20%) and Tinko's recovery performance.
-      </p>
-
-      <div class="bg-slate-800 rounded-2xl p-8 md:p-12 shadow-2xl border border-slate-700">
-
-        <!-- INPUT -->
-        <div class="mb-12">
-          <label class="block text-sm font-semibold text-slate-400 mb-4 uppercase tracking-wider">
-            Your Monthly Revenue (GMV)
-          </label>
-          <div class="flex items-center justify-center gap-4 text-4xl md:text-5xl font-bold text-white mb-6">
-            <span>₹</span>
-            <span id="revenueDisplay">10,00,000</span>
-          </div>
-          <input type="range" id="revenueRange" min="100000" max="5000000" step="100000" value="1000000"
-            class="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-tinko-orange hover:accent-orange-500 transition-all">
-          <div class="flex justify-between text-xs text-slate-500 mt-2 font-mono">
-            <span>₹1L</span>
-            <span>₹50L+</span>
-          </div>
+      <h2 class="text-3xl font-bold mb-12">The Most Expensive Click is the Last One.</h2>
+      <div class="grid md:grid-cols-4 gap-4 items-center">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 opacity-60">
+          <div class="text-gray-400 text-sm font-semibold uppercase mb-2">Step 1</div>
+          <i class="ph-duotone ph-megaphone text-4xl text-gray-400 mb-2"></i>
+          <p class="font-bold text-gray-800">Paid Ad</p>
+          <p class="text-xs text-red-500 mt-1">-₹500 Cost</p>
         </div>
-
-        <!-- RESULTS GRID -->
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-          <div class="p-6 rounded-xl bg-rose-500/10 border border-rose-500/20">
-            <p class="text-rose-400 text-sm font-semibold mb-1">Monthly Revenue Lost</p>
-            <p class="text-3xl font-bold text-rose-500">₹<span id="lostRevenue">2,00,000</span></p>
-            <p class="text-xs text-rose-400/60 mt-2">~20% failure rate</p>
-          </div>
-          <div class="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">
-              PURE PROFIT
-            </div>
-            <p class="text-emerald-400 text-sm font-semibold mb-1">Tinko Recovers</p>
-            <p class="text-3xl font-bold text-emerald-500">₹<span id="recoveredRevenue">1,00,000</span></p>
-            <p class="text-xs text-emerald-400/60 mt-2">Money back in your bank</p>
-          </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 opacity-60">
+          <div class="text-gray-400 text-sm font-semibold uppercase mb-2">Step 2</div>
+          <i class="ph-duotone ph-globe text-4xl text-gray-400 mb-2"></i>
+          <p class="font-bold text-gray-800">Hosting</p>
+          <p class="text-xs text-red-500 mt-1">-₹50 Cost</p>
         </div>
-
-        <!-- LEAD MAGNET -->
-        <div class="bg-white/5 rounded-xl p-6 border border-white/10">
-          <h3 class="text-xl font-bold mb-2">Stop the leak today.</h3>
-          <p class="text-slate-400 text-sm mb-6">Get 1 month of free recovery. No credit card required.</p>
-
-          <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            onsubmit="event.preventDefault(); alert('Spot claimed! We will contact you shortly.');">
-            <input type="email" placeholder="Enter your work email" required
-              class="flex-1 px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-tinko-orange transition-colors">
-            <button type="submit"
-              class="px-6 py-3 rounded-lg bg-tinko-orange hover:bg-orange-600 text-white font-bold shadow-lg shadow-orange-500/20 transition-all whitespace-nowrap">
-              Claim Free Slot
-            </button>
-          </form>
-          <p class="text-[10px] text-slate-500 mt-3">Limited to first 100 merchants this month.</p>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 opacity-60">
+          <div class="text-gray-400 text-sm font-semibold uppercase mb-2">Step 3</div>
+          <i class="ph-duotone ph-package text-4xl text-gray-400 mb-2"></i>
+          <p class="font-bold text-gray-800">Logistics</p>
+          <p class="text-xs text-red-500 mt-1">-₹100 Cost</p>
         </div>
-
+        <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-red-100 relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] px-2 py-1 font-bold">FAILURE
+          </div>
+          <div class="text-red-500 text-sm font-semibold uppercase mb-2">Step 4</div>
+          <i class="ph-fill ph-warning-circle text-4xl text-red-500 mb-2"></i>
+          <p class="font-bold text-red-600">Bank Error</p>
+          <p class="text-xs text-red-600 mt-1 font-bold">ALL MONEY LOST</p>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <script>
-    const revenueRange = document.getElementById('revenueRange');
-    const revenueDisplay = document.getElementById('revenueDisplay');
-    const lostRevenue = document.getElementById('lostRevenue');
-    const recoveredRevenue = document.getElementById('recoveredRevenue');
-
-    function formatCurrency(num) {
-      return new Intl.NumberFormat('en-IN').format(num);
-    }
-
-    function updateCalculator() {
-      const gmv = parseInt(revenueRange.value);
-      const lost = Math.round(gmv * 0.20); // 20% failure
-      const recovered = Math.round(lost * 0.50); // 50% recovery
-
-      revenueDisplay.textContent = formatCurrency(gmv);
-      lostRevenue.textContent = formatCurrency(lost);
-      recoveredRevenue.textContent = formatCurrency(recovered);
-    }
-
-    revenueRange.addEventListener('input', updateCalculator);
-    // Init
-    updateCalculator();
-  </script>
-
-
-  <!-- SOLUTION -->
-  <section id="solution" class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
-
-      <div>
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">
-          Tinko catches the drop —
-          <span class="text-tinko-orange">and brings the sale back.</span>
-        </h2>
-
-        <p class="text-lg text-tinko-muted mb-10 max-w-xl">
-          When a payment fails, Tinko instantly detects it and sends the customer a clean retry link via SMS, WhatsApp
-          or email — letting them complete the payment in one tap.
+      <div class="mt-12 bg-white p-8 rounded-2xl border border-blue-100 shadow-lg inline-block">
+        <p class="text-xl text-gray-700 font-medium">
+          When a payment fails, you don't just lose the profit.<br>
+          <span class="text-tinko-blue font-bold">You lose the entire investment.</span>
         </p>
-
-        <div class="space-y-6">
-          <div>
-            <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your customer</h3>
-            <ul class="space-y-2 text-sm text-tinko-muted">
-              <li>• A simple retry link — no need to find the product again.</li>
-              <li>• Delivered via trusted, verified channels.</li>
-              <li>• Zero spam — respectful follow-ups only.</li>
-              <li>• Same cart, same journey — friction removed.</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="uppercase text-xs font-semibold text-tinko-muted tracking-wider mb-2">For your business</h3>
-            <ul class="space-y-2 text-sm text-tinko-muted">
-              <li>• Recover revenue already won in intent.</li>
-              <li>• Works with Razorpay/Stripe/Cashfree — no changes needed.</li>
-              <li>• Clear view of how much money failed payments cost you.</li>
-              <li>• Invisible infrastructure — your brand stays in front.</li>
-            </ul>
-          </div>
+        <div class="mt-6">
+          <p class="text-sm text-gray-500">Tinko is your insurance policy against wasted ad spend.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- VISUAL FUNNEL -->
-      <div class="rounded-3xl bg-gray-900 text-gray-200 p-6 shadow-xl space-y-6">
-        <p class="text-xs tracking-[0.20em] font-semibold text-gray-400">FAIL → RECOVER FUNNEL</p>
+  <!-- PURE UPSIDE / PRICING -->
+  <section id="pricing" class="py-20 bg-tinko-blue text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10"
+      style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+    <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">We Don't Eat Unless You Eat.</h2>
+      <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-12">Our logic is simple: pure performance pricing. No
+        hidden fees.</p>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl">
+          <h3 class="text-2xl font-bold mb-2">Installation</h3>
+          <div class="text-5xl font-extrabold mb-4">₹0</div>
+          <p class="text-blue-200 text-sm">No setup fees.<br>No credit card required.</p>
+        </div>
+        <div class="bg-white text-tinko-blue p-8 rounded-2xl shadow-2xl transform scale-110 relative">
+          <div
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-tinko-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+            Most Popular</div>
+          <h3 class="text-2xl font-bold mb-2">Commission</h3>
+          <div class="text-5xl font-extrabold mb-4">5%</div>
+          <p class="text-gray-600 text-sm font-medium">Only on the revenue<br>we successfully recover.</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl">
+          <h3 class="text-2xl font-bold mb-2">Monthly Fee</h3>
+          <div class="text-5xl font-extrabold mb-4">₹0</div>
+          <p class="text-blue-200 text-sm">Pause or cancel anytime.<br>No contracts.</p>
+        </div>
+      </div>
+      <div class="mt-12 text-blue-100 text-sm font-medium flex items-center justify-center gap-2">
+        <i class="ph-fill ph-seal-check text-yellow-400 text-xl"></i>
+        It is mathematically impossible to have a negative ROI with Tinko.
+      </div>
+    </div>
+  </section>
 
-        <div class="space-y-6">
-          <div class="flex items-start gap-4">
-            <div class="h-9 w-9 rounded-xl bg-slate-800 flex items-center justify-center text-xs">1</div>
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-900">How the "Magic Link" Works</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="bg-white border-8 border-gray-100 rounded-[2.5rem] shadow-2xl max-w-sm mx-auto overflow-hidden">
+          <div class="bg-gray-100 p-4 flex items-center gap-3 border-b border-gray-200">
+            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white font-bold">U</div>
             <div>
-              <p class="font-semibold text-gray-100 text-sm">Customer attempts payment</p>
-              <p class="text-xs text-gray-400">Checkout loaded. “Pay Now” clicked.</p>
+              <div class="text-xs font-bold text-gray-800">Air Jordan</div>
+              <div class="text-[10px] text-gray-500">Official Business Account</div>
             </div>
           </div>
-
-          <div class="flex items-start gap-4">
-            <div class="h-9 w-9 rounded-xl bg-red-600 flex items-center justify-center text-xs font-bold text-white">!
+          <div class="p-6 bg-[#e5ddd5] min-h-[400px] flex flex-col justify-end space-y-4">
+            <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-[90%] text-sm">
+              <p class="text-gray-800">Hi Alex! 👋</p>
+              <p class="text-gray-800 mt-2">We noticed your payment for <strong>Air Jordans</strong>
+                failed due to a bank timeout.</p>
+              <p class="text-gray-800 mt-2">Don't worry, we saved your cart. Click below to secure your
+                order:</p>
             </div>
-            <div>
-              <p class="font-semibold text-gray-100 text-sm">Payment fails</p>
-              <p class="text-xs text-gray-400">Network issues, OTP delay, bank decline.</p>
+            <div class="bg-white p-2 rounded-lg rounded-tl-none shadow-sm max-w-[80%]">
+              <div class="bg-gray-50 rounded border border-gray-100 p-2 flex gap-3 items-center">
+                <div class="w-10 h-10 bg-blue-100 rounded flex items-center justify-center text-tinko-blue">
+                  <i class="ph-fill ph-lock-key"></i>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-tinko-blue">Tinko.in/pay/8s9d</div>
+                  <div class="text-[10px] text-gray-500">Secure Payment Link</div>
+                </div>
+              </div>
             </div>
+            <div class="text-center text-[10px] text-gray-500 uppercase font-bold mt-4">Read 10:42 AM</div>
           </div>
-
-          <div class="flex items-start gap-4">
+        </div>
+        <div class="space-y-10">
+          <div class="flex gap-4">
             <div
-              class="h-9 w-9 rounded-xl bg-tinko-orange flex items-center justify-center text-xs font-bold text-white">T
+              class="flex-shrink-0 w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl font-bold">
+              <i class="ph-fill ph-warning"></i>
             </div>
             <div>
-              <p class="font-semibold text-gray-100 text-sm">Tinko intervenes</p>
-              <p class="text-xs text-gray-400">Sends a clean recovery link instantly.</p>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">1. The Failure</h3>
+              <p class="text-gray-600">A customer tries to pay, but the bank server times out or the OTP
+                fails. Usually, they leave and never come back.</p>
             </div>
           </div>
-
-          <div class="flex items-start gap-4">
+          <div class="flex gap-4">
             <div
-              class="h-9 w-9 rounded-xl bg-emerald-500 flex items-center justify-center text-xs font-bold text-white">✓
+              class="flex-shrink-0 w-12 h-12 bg-blue-100 text-tinko-blue rounded-full flex items-center justify-center text-xl font-bold">
+              <i class="ph-fill ph-lightning"></i>
             </div>
             <div>
-              <p class="font-semibold text-gray-100 text-sm">Payment completes</p>
-              <p class="text-xs text-gray-400">Customer finishes checkout. Revenue saved.</p>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">2. The Detection</h3>
+              <p class="text-gray-600">Tinko's webhook listens to the gateway. We detect the failure in
+                <span class="font-bold text-gray-900">under 2 seconds</span>.
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl font-bold">
+              <i class="ph-fill ph-whatsapp-logo"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">3. The Recovery</h3>
+              <p class="text-gray-600">We instantly send a WhatsApp, Text and Email messages with a pre-filled payment
+                link. The customer clicks, pays, and the order is saved.</p>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
+  <!-- ROI CALCULATOR -->
+  <section id="roi-calculator" class="py-20 bg-white border-t border-gray-100">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Calculate Your Lost Revenue</h2>
+      <p class="text-gray-600 mb-12">See how much money you're leaving on the table every month.</p>
 
-  <!-- BENEFITS -->
-  <section id="benefits" class="bg-gray-50 py-20 border-t border-gray-200">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl font-bold mb-10">Why modern brands choose <span class="text-tinko-orange">Tinko</span></h2>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 bg-white rounded-xl shadow-sm">
-          <h3 class="font-semibold mb-2">Never touches payments</h3>
-          <p class="text-sm text-tinko-muted">Payments always flow through your gateway — Tinko only assists recovery.
-          </p>
+      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 text-left">
+        <div class="space-y-8">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Monthly Revenue (₹)</label>
+            <input type="range" min="100000" max="10000000" step="100000" value="500000" class="w-full"
+              id="revenueRange" oninput="updateCalc()">
+            <div class="text-right font-mono font-bold text-tinko-blue mt-2" id="revenueDisplay">₹5,00,000
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Payment Failure Rate (%)</label>
+            <input type="range" min="10" max="50" step="1" value="30" class="w-full" id="failureRange"
+              oninput="updateCalc()">
+            <div class="text-right font-mono font-bold text-red-500 mt-2" id="failureDisplay">30%</div>
+            <p class="text-xs text-gray-400 mt-1">Industry average is 28-35% for UPI/Cards.</p>
+          </div>
         </div>
 
-        <div class="p-6 bg-white rounded-xl shadow-sm">
-          <h3 class="font-semibold mb-2">Respects your customers</h3>
-          <p class="text-sm text-tinko-muted">No spam. No pressure. Only thoughtful reminders.</p>
-        </div>
-
-        <div class="p-6 bg-white rounded-xl shadow-sm">
-          <h3 class="font-semibold mb-2">Works with your stack</h3>
-          <p class="text-sm text-tinko-muted">Razorpay, Stripe, Cashfree — plug in and go.</p>
+        <div class="mt-10 pt-8 border-t border-gray-100 bg-blue-50 -mx-8 -mb-8 p-8 rounded-b-2xl">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600 font-medium">Revenue You Are Losing:</span>
+            <span class="text-red-500 font-bold text-xl" id="lostRevenue">₹1,50,000</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-tinko-blue font-bold text-lg">Revenue Tinko Can Recover:</span>
+            <span class="text-tinko-blue font-extrabold text-3xl" id="recoveredRevenue">₹1,05,000</span>
+          </div>
+          <p class="text-xs text-gray-500 mt-4 text-center">*Assuming conservative 70% recovery rate.</p>
         </div>
       </div>
     </div>
   </section>
-
-
-  <!-- LOGIN WITH OTP -->
-  <section id="login" class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-
-      <h2 id="authHeader" class="text-3xl md:text-4xl font-bold mb-6">Welcome Back</h2>
-      <p class="text-slate-300 max-w-2xl mx-auto mb-10">
-        Sign in with your email. We’ll send you a one-time password (OTP) — no passwords, no friction.
-      </p>
-
-      <div class="max-w-md mx-auto space-y-6">
-
-        <!-- TOGGLE: LOGIN / SIGNUP -->
-        <div class="flex justify-center gap-2 mb-6 bg-slate-800 p-1 rounded-full w-fit mx-auto">
-          <button id="tabLogin"
-            class="px-6 py-2 rounded-full bg-tinko-orange text-white font-semibold transition-all text-sm">Sign
-            In</button>
-          <button id="tabSignup"
-            class="px-6 py-2 rounded-full text-slate-300 font-semibold hover:text-white transition-all text-sm">Sign
-            Up</button>
-        </div>
-
-        <!-- STEP 1: ENTER EMAIL -->
-        <div id="step1" class="space-y-4">
-          <input id="login_email" type="email"
-            class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
-            placeholder="Enter your email" required />
-
-          <button id="sendOtpBtn"
-            class="w-full bg-tinko-orange hover:bg-orange-600 py-3 rounded-lg font-semibold shadow-lg">
-            Send OTP
-          </button>
-        </div>
-
-        <!-- STEP 2: VERIFY OTP -->
-        <div id="step2" class="space-y-4 hidden">
-          <input id="otp_code" type="text"
-            class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500"
-            placeholder="Enter the OTP" required />
-
-          <button id="verifyOtpBtn"
-            class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-lg font-semibold shadow-lg">
-            Verify OTP
-          </button>
-
-          <p id="resendOtp" class="text-xs text-slate-400 cursor-pointer hover:text-white">
-            Resend OTP
-          </p>
-        </div>
-
-        <p id="loginMessage" class="text-sm text-slate-300"></p>
-      </div>
-    </div>
-  </section>
-
 
   <!-- FOOTER -->
-  <footer class="bg-white border-t border-gray-200">
-    <div
-      class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-tinko-muted">
-      <p>© <span id="year"></span> Tinko • A product of Blocks & Loops Technologies Pvt Ltd</p>
-
-      <div class="flex gap-4">
-        <a href="privacy-policy.html" class="hover:text-tinko-dark">Privacy</a>
-        <a href="terms.html" class="hover:text-tinko-dark">Terms</a>
-        <a href="mailto:contact@tinko.in" class="hover:text-tinko-dark">contact@tinko.in</a>
+  <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center gap-2 mb-4 md:mb-0">
+          <div class="w-8 h-8 bg-tinko-blue rounded-lg flex items-center justify-center text-white font-bold">
+            T</div>
+          <span class="font-bold text-xl">Tinko.</span>
+        </div>
+        <div class="text-gray-400 text-sm">
+          &copy; 2024 Tinko Inc. All rights reserved.
+        </div>
       </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    function updateCalc() {
+      const revenue = parseInt(document.getElementById('revenueRange').value);
+      const failureRate = parseInt(document.getElementById('failureRange').value);
+
+      document.getElementById('revenueDisplay').innerText = '₹' + revenue.toLocaleString('en-IN');
+      document.getElementById('failureDisplay').innerText = failureRate + '%';
+
+      const lost = revenue * (failureRate / 100);
+      const recovered = lost * 0.70; // 70% recovery assumption
+
+      document.getElementById('lostRevenue').innerText = '₹' + Math.round(lost).toLocaleString('en-IN');
+      document.getElementById('recoveredRevenue').innerText = '₹' + Math.round(recovered).toLocaleString('en-IN');
+    }
+
+    // Init
+    updateCalc();
   </script>
+  <!-- LIVE RECOVERY TICKER -->
+  <div id="recoveryTicker"
+    class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 transition-all duration-500">
+    <div
+      class="bg-white/90 backdrop-blur-md border border-tinko-blue/20 shadow-lg rounded-full px-4 py-3 flex items-center gap-3">
+      <div class="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-pulse">
+        <i class="ph-fill ph-money"></i>
+      </div>
+      <div>
+        <p class="text-xs font-bold text-gray-900">Just Recovered <span class="text-tinko-blue"
+            id="tickerAmount">₹4,500</span></p>
+        <p class="text-[10px] text-gray-500">for <span id="tickerStore">Urban Kicks</span> • <span id="tickerTime">2m
+            ago</span></p>
+      </div>
+    </div>
+  </div>
 
-  <!-- OTP LOGIN LOGIC -->
-  <script src="auth.js"></script>
+  <script>
+    // Live Recovery Ticker Logic
+    const ticker = document.getElementById('recoveryTicker');
+    const tickerAmount = document.getElementById('tickerAmount');
+    const tickerStore = document.getElementById('tickerStore');
+    const tickerTime = document.getElementById('tickerTime');
 
+    const stores = ['a Fashion Store', 'a D2C Brand', 'an Electronics Store', 'a Home Decor Shop', 'a Beauty Brand', 'a Gadget Store'];
+    const amounts = ['₹1,200', '₹4,500', '₹899', '₹12,400', '₹2,100', '₹6,750'];
+
+    function showTicker() {
+      // Randomize content
+      tickerAmount.innerText = amounts[Math.floor(Math.random() * amounts.length)];
+      tickerStore.innerText = stores[Math.floor(Math.random() * stores.length)];
+      tickerTime.innerText = Math.floor(Math.random() * 5 + 1) + 'm ago';
+
+      // Show
+      ticker.classList.remove('translate-y-20', 'opacity-0');
+
+      // Hide after 5s
+      setTimeout(() => {
+        ticker.classList.add('translate-y-20', 'opacity-0');
+      }, 5000);
+    }
+
+    // Start loop
+    setTimeout(() => {
+      showTicker();
+      setInterval(showTicker, 12000); // Show every 12 seconds
+    }, 3000);
+  </script>
 </body>
 
 </html>

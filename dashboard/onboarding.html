@@ -8,16 +8,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            "tinko-orange": "#DE6B06",
-            "tinko-dark": "#0b1220",
-            "tinko-card": "#1e293b"
+            "tinko-blue": "#0044CC",
+            "tinko-dark": "#0F172A",
+            "tinko-card": "#ffffff"
           },
           fontFamily: {
             jakarta: ['"Plus Jakarta Sans"', "sans-serif"]
@@ -29,545 +29,460 @@
   <style>
     body {
       font-family: "Plus Jakarta Sans", sans-serif;
-      background: #0f172a;
-      color: white;
+      background: #f8fafc;
+      color: #0f172a;
     }
 
-    .step-active {
-      border-left: 3px solid #DE6B06;
-      padding-left: 12px;
-      color: white;
-    }
-
-    .step-inactive {
-      border-left: 3px solid #334155;
-      padding-left: 12px;
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
       color: #64748b;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .step-item.active {
+      background: #eff6ff;
+      color: #0044CC;
+      font-weight: 600;
+    }
+
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .step-item.active .step-circle {
+      border-color: #0044CC;
+      background: #0044CC;
+      color: white;
     }
 
     .input-field {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: white;
-      padding: 10px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      padding: 12px;
       border-radius: 8px;
       width: 100%;
       outline: none;
+      transition: all 0.2s;
     }
 
     .input-field:focus {
-      border-color: #DE6B06;
-    }
-
-    .pill-btn {
-      border: 1px solid #334155;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-
-    .pill-btn.active {
-      background: #DE6B06;
-      border-color: #DE6B06;
-      color: white;
+      border-color: #0044CC;
+      box-shadow: 0 0 0 3px rgba(0, 68, 204, 0.1);
     }
 
     .preview-phone {
       background: white;
-      border-radius: 30px;
-      border: 8px solid #334155;
+      border-radius: 40px;
+      border: 8px solid #1e293b;
       overflow: hidden;
-      height: 600px;
-      width: 300px;
+      height: 640px;
+      width: 320px;
       position: relative;
-      color: black;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     }
   </style>
 </head>
 
-<body class="h-screen flex overflow-hidden">
+<body class="h-screen flex overflow-hidden bg-slate-50">
 
-  <!-- LEFT: SIDEBAR STEPS -->
-  <div class="w-64 bg-slate-900 border-r border-slate-800 p-8 hidden md:block">
-    <div class="font-extrabold text-tinko-orange text-xl mb-10 tracking-widest">TINKO</div>
-    <div class="space-y-6 text-sm font-medium">
-      <div id="nav-step-1" class="step-active">1. Business Info</div>
-      <div id="nav-step-2" class="step-inactive">2. Payment Stack</div>
-      <div id="nav-step-3" class="step-inactive">3. Recovery Prefs</div>
-      <div id="nav-step-4" class="step-inactive">4. Technical Setup</div>
-      <div id="nav-step-5" class="step-inactive">5. Branding</div>
-      <div id="nav-step-6" class="step-inactive">6. Team Contacts</div>
-      <div id="nav-step-7" class="step-inactive">7. Compliance</div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="w-64 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
+    <div class="p-6 border-b border-slate-100">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-tinko-blue rounded-lg flex items-center justify-center text-white font-bold text-xl">
+          T</div>
+        <span class="font-extrabold tracking-tight text-tinko-blue text-xl">Tinko.</span>
+      </div>
     </div>
-  </div>
 
-  <!-- MIDDLE: FORM AREA -->
-  <div class="flex-1 overflow-y-auto p-8 md:p-12 relative">
-    <div class="max-w-2xl mx-auto pb-20">
+    <div class="p-4 space-y-2 flex-1 overflow-y-auto">
+      <div class="text-xs font-bold text-slate-400 uppercase tracking-wider px-4 mb-2 mt-4">Setup Progress</div>
 
-      <!-- STEP 1: BUSINESS INFO -->
-      <div id="step-1" class="step-content">
-        <h1 class="text-3xl font-bold mb-2">Business Information</h1>
-        <p class="text-slate-400 mb-8">Let's start with the basics.</p>
-
-        <div class="space-y-6">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Business Name</label>
-            <input type="text" id="businessName" class="input-field" placeholder="e.g. Acme Inc"
-              oninput="updatePreview()">
-          </div>
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Website URL</label>
-            <input type="url" id="websiteUrl" class="input-field" placeholder="https://acme.com">
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Industry</label>
-              <select id="industry" class="input-field">
-                <option value="">Select...</option>
-                <option value="ecommerce">eCommerce / D2C</option>
-                <option value="saas">SaaS</option>
-                <option value="edtech">EdTech</option>
-                <option value="fintech">FinTech</option>
-                <option value="services">Services</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Business Size</label>
-              <select id="businessSize" class="input-field">
-                <option value="solo">Solo</option>
-                <option value="2-10">2-10 Employees</option>
-                <option value="10-50">10-50 Employees</option>
-                <option value="50+">50+ Employees</option>
-              </select>
-            </div>
-          </div>
-        </div>
+      <div id="nav-step-1" class="step-item active" onclick="if(currentStep > 1) nextStep(1)">
+        <div class="step-circle">1</div>
+        <span>Business Info</span>
       </div>
 
-      <!-- STEP 2: PAYMENT STACK -->
-      <div id="step-2" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Payment Stack</h1>
-        <p class="text-slate-400 mb-8">Which gateways do you use?</p>
-
-        <div class="space-y-8">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Gateways (Select all)</label>
-            <div class="flex flex-wrap gap-2" id="gatewayContainer">
-              <!-- JS Generated -->
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-6">
-            <div>
-              <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Monthly Txns</label>
-              <select id="monthlyVolume" class="input-field">
-                <option value="<100">&lt; 100</option>
-                <option value="100-1k">100 - 1k</option>
-                <option value="1k-10k">1k - 10k</option>
-                <option value="10k+">10k+</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Monthly GMV</label>
-              <select id="monthlyGmv" class="input-field">
-                <option value="<1L">&lt; ₹1 Lakh</option>
-                <option value="1-10L">₹1 - 10 Lakh</option>
-                <option value="10-50L">₹10 - 50 Lakh</option>
-                <option value="50L+">₹50 Lakh+</option>
-              </select>
-            </div>
-          </div>
-        </div>
+      <div id="nav-step-2" class="step-item" onclick="if(currentStep > 2) nextStep(2)">
+        <div class="step-circle">2</div>
+        <span>Connect Stack</span>
       </div>
 
-      <!-- STEP 3: RECOVERY PREFS -->
-      <div id="step-3" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Recovery Preferences</h1>
-        <p class="text-slate-400 mb-8">How should we reach out?</p>
+      <div id="nav-step-3" class="step-item" onclick="if(currentStep > 3) nextStep(3)">
+        <div class="step-circle">3</div>
+        <span>Recovery</span>
+      </div>
 
-        <div class="space-y-8">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Channels</label>
-            <div class="flex gap-4">
-              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="whatsapp"
-                  class="accent-tinko-orange channel-check" checked onchange="updatePreview()"> WhatsApp</label>
-              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="sms"
-                  class="accent-tinko-orange channel-check" onchange="updatePreview()"> SMS</label>
-              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="email"
-                  class="accent-tinko-orange channel-check" onchange="updatePreview()"> Email</label>
+      <!-- Mobile Header -->
+      <div class="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-tinko-blue rounded-lg flex items-center justify-center text-white font-bold text-lg">T
+          </div>
+          <span class="font-bold text-slate-900">Step <span id="mobile-step-num">1</span>/4</span>
+        </div>
+        <a href="login.html" class="text-slate-500"><i class="ph-bold ph-sign-out text-xl"></i></a>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 md:p-12 lg:p-16">
+        <div class="max-w-2xl mx-auto">
+
+          <!-- STEP 1: BUSINESS INFO -->
+          <div id="step-1" class="step-content">
+            <div class="mb-8">
+              <h1 class="text-3xl font-bold text-slate-900 mb-2">Tell us about your business</h1>
+              <p class="text-slate-500 text-lg">We'll customize your recovery messages based on this.</p>
+            </div>
+
+            <div class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Brand Name</label>
+                <input type="text" class="input-field" placeholder="e.g. Urban Kicks" id="brandName"
+                  oninput="updatePreview()">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Website URL</label>
+                <input type="url" class="input-field" placeholder="https://urbankicks.in" id="websiteUrl">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Monthly Revenue (Approx)</label>
+                <select class="input-field">
+                  <option>Less than ₹1 Lakh</option>
+                  <option>₹1 Lakh - ₹10 Lakh</option>
+                  <option>₹10 Lakh - ₹50 Lakh</option>
+                  <option>₹50 Lakh+</option>
+                </select>
+              </div>
+
+              <button onclick="nextStep(2)"
+                class="w-full bg-tinko-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl mt-4 transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                Continue <i class="ph-bold ph-arrow-right"></i>
+              </button>
             </div>
           </div>
 
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-3">Destination</label>
-            <div class="flex gap-2">
-              <button type="button" class="pill-btn active" onclick="setDest(this, 'customer')">Direct to
-                Customer</button>
-              <button type="button" class="pill-btn" onclick="setDest(this, 'internal')">Internal Team Only</button>
-              <button type="button" class="pill-btn" onclick="setDest(this, 'both')">Both</button>
+          <!-- STEP 2: PAYMENT STACK -->
+          <div id="step-2" class="step-content hidden">
+            <div class="mb-8">
+              <h1 class="text-3xl font-bold text-slate-900 mb-2">Connect your stack</h1>
+              <p class="text-slate-500 text-lg">Tinko listens to these gateways to detect failures.</p>
             </div>
-            <input type="hidden" id="recoveryDest" value="customer">
+
+            <div class="space-y-4">
+              <!-- Razorpay -->
+              <div
+                class="p-5 border border-slate-200 bg-white rounded-xl flex items-center justify-between hover:border-tinko-blue hover:shadow-md transition cursor-pointer group"
+                onclick="toggleGateway('razorpay')">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-bold text-xl">
+                    R</div>
+                  <div>
+                    <div class="font-bold text-slate-900 text-lg">Razorpay</div>
+                    <div class="text-sm text-slate-500">Popular in India</div>
+                  </div>
+                </div>
+                <div id="check-razorpay"
+                  class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center group-hover:border-tinko-blue transition">
+                  <div class="w-3 h-3 bg-tinko-blue rounded-full hidden"></div>
+                </div>
+              </div>
+
+              <!-- Stripe -->
+              <div
+                class="p-5 border border-slate-200 bg-white rounded-xl flex items-center justify-between hover:border-tinko-blue hover:shadow-md transition cursor-pointer group"
+                onclick="toggleGateway('stripe')">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 font-bold text-xl">
+                    S</div>
+                  <div>
+                    <div class="font-bold text-slate-900 text-lg">Stripe</div>
+                    <div class="text-sm text-slate-500">Global standard</div>
+                  </div>
+                </div>
+                <div id="check-stripe"
+                  class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center group-hover:border-tinko-blue transition">
+                  <div class="w-3 h-3 bg-tinko-blue rounded-full hidden"></div>
+                </div>
+              </div>
+
+              <!-- Cashfree -->
+              <div
+                class="p-5 border border-slate-200 bg-white rounded-xl flex items-center justify-between hover:border-tinko-blue hover:shadow-md transition cursor-pointer group"
+                onclick="toggleGateway('cashfree')">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 font-bold text-xl">
+                    C</div>
+                  <div>
+                    <div class="font-bold text-slate-900 text-lg">Cashfree</div>
+                    <div class="text-sm text-slate-500">Growing fast</div>
+                  </div>
+                </div>
+                <div id="check-cashfree"
+                  class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center group-hover:border-tinko-blue transition">
+                  <div class="w-3 h-3 bg-tinko-blue rounded-full hidden"></div>
+                </div>
+              </div>
+
+              <div class="flex gap-4 mt-8 pt-4">
+                <button onclick="nextStep(1)"
+                  class="px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold transition">Back</button>
+                <button onclick="nextStep(3)"
+                  class="flex-1 bg-tinko-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                  Continue <i class="ph-bold ph-arrow-right"></i>
+                </button>
+              </div>
+            </div>
           </div>
+
+          <!-- STEP 3: RECOVERY PREFS -->
+          <div id="step-3" class="step-content hidden">
+            <div class="mb-8">
+              <h1 class="text-3xl font-bold text-slate-900 mb-2">Recovery Channels</h1>
+              <p class="text-slate-500 text-lg">How should we contact your customers?</p>
+            </div>
+
+            <div class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+              <!-- WhatsApp -->
+              <div class="pb-6 border-b border-slate-100">
+                <div class="flex justify-between items-center mb-2">
+                  <label class="font-bold text-slate-900 flex items-center gap-2"><i
+                      class="ph-fill ph-whatsapp-logo text-green-500 text-xl"></i> WhatsApp</label>
+                  <span
+                    class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-bold">Recommended</span>
+                </div>
+                <p class="text-sm text-slate-500 mb-4">Sends a friendly, branded message with a one-click payment link.
+                </p>
+                <div class="flex gap-2">
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-tinko-blue text-white border border-tinko-blue transition"
+                    onclick="toggleBtn(this)">Enabled</button>
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 transition"
+                    onclick="toggleBtn(this)">Disabled</button>
+                </div>
+              </div>
+
+              <!-- SMS -->
+              <div class="pb-6 border-b border-slate-100">
+                <div class="flex justify-between items-center mb-2">
+                  <label class="font-bold text-slate-900 flex items-center gap-2"><i
+                      class="ph-fill ph-chat-text text-blue-500 text-xl"></i> SMS Fallback</label>
+                </div>
+                <p class="text-sm text-slate-500 mb-4">Sent if WhatsApp fails or is not delivered within 5 minutes.</p>
+                <div class="flex gap-2">
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-tinko-blue text-white border border-tinko-blue transition"
+                    onclick="toggleBtn(this)">Enabled</button>
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 transition"
+                    onclick="toggleBtn(this)">Disabled</button>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="font-bold text-slate-900 flex items-center gap-2"><i
+                      class="ph-fill ph-envelope-simple text-slate-500 text-xl"></i> Email Recovery</label>
+                </div>
+                <p class="text-sm text-slate-500 mb-4">A professional email follow-up for higher value carts.</p>
+                <div class="flex gap-2">
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 transition"
+                    onclick="toggleBtn(this)">Enabled</button>
+                  <button
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-tinko-blue text-white border border-tinko-blue transition"
+                    onclick="toggleBtn(this)">Disabled</button>
+                </div>
+              </div>
+
+              <div class="flex gap-4 mt-8 pt-4">
+                <button onclick="nextStep(2)"
+                  class="px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold transition">Back</button>
+                <button onclick="nextStep(4)"
+                  class="flex-1 bg-tinko-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                  Continue <i class="ph-bold ph-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: TECHNICAL SETUP (WEBHOOKS) -->
+          <div id="step-4" class="step-content hidden">
+            <div class="mb-8">
+              <h1 class="text-3xl font-bold text-slate-900 mb-2">Final Step: Webhooks</h1>
+              <p class="text-slate-500 text-lg">Add this URL to your payment gateway settings.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mb-6">
+                <label class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Webhook URL</label>
+                <div class="flex items-center gap-2 mt-2">
+                  <code
+                    class="flex-1 bg-white border border-slate-200 p-4 rounded-lg text-emerald-600 font-mono text-sm break-all">https://api.tinko.in/webhooks/v1/listener</code>
+                  <button
+                    class="bg-white border border-slate-200 hover:bg-slate-50 p-4 rounded-lg text-slate-600 transition"
+                    title="Copy">
+                    <i class="ph-bold ph-copy"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-3 flex items-center gap-1">
+                  <i class="ph-fill ph-info text-blue-500"></i> We'll automatically detect when you add this.
+                </p>
+              </div>
+
+              <div class="flex items-start gap-3 mb-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <input type="checkbox" class="mt-1 w-5 h-5 accent-tinko-blue rounded cursor-pointer">
+                <p class="text-sm text-slate-700 font-medium">I have added the webhook URL to my payment gateway
+                  dashboard.</p>
+              </div>
+
+              <div class="flex gap-4">
+                <button onclick="nextStep(3)"
+                  class="px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold transition">Back</button>
+                <button onclick="finishSetup()"
+                  class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20 transition-all flex items-center justify-center gap-2">
+                  Finish Setup <i class="ph-bold ph-check"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
+      </main>
 
-      <!-- STEP 4: TECHNICAL SETUP -->
-      <div id="step-4" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Technical Setup</h1>
-        <p class="text-slate-400 mb-8">Connect your gateways.</p>
+      <!-- RIGHT: LIVE PREVIEW -->
+      <aside
+        class="hidden xl:flex w-[480px] bg-slate-100 border-l border-slate-200 items-center justify-center p-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5"
+          style="background-image: radial-gradient(#0044CC 1px, transparent 1px); background-size: 24px 24px;"></div>
 
-        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 mb-6">
-          <label class="block text-xs uppercase text-slate-500 font-bold mb-1">Your Webhook URL</label>
-          <div class="flex items-center gap-2">
-            <code
-              class="text-tinko-orange text-sm bg-slate-900 px-2 py-1 rounded flex-1">https://api.tinko.in/webhook/wh_123456789</code>
-            <button class="text-xs text-slate-400 hover:text-white"><i class="fas fa-copy"></i></button>
+        <div class="relative z-10 flex flex-col items-center">
+          <h3 class="text-slate-400 font-bold uppercase tracking-widest text-xs mb-8">Live Preview</h3>
+
+          <div class="preview-phone shadow-2xl bg-white">
+            <!-- Phone Header -->
+            <div class="bg-[#075E54] text-white h-16 flex items-center px-4 gap-3">
+              <i class="ph-bold ph-arrow-left"></i>
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-xs font-bold">T</div>
+              <div>
+                <div class="font-bold text-sm">Tinko Recovery</div>
+                <div class="text-[10px] opacity-80">Business Account</div>
+              </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="bg-[#ECE5DD] h-full p-4 pt-8 relative">
+              <!-- Message Bubble -->
+              <div
+                class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-[90%] text-sm text-gray-800 mb-4 transform translate-y-0 opacity-100 transition-all duration-500">
+                <p>Hi there! 👋</p>
+                <p class="mt-1">We noticed your payment for <b id="previewBrand" class="text-tinko-blue">Urban Kicks</b>
+                  failed.</p>
+                <p class="text-[10px] text-gray-400 text-right mt-1">10:42 AM</p>
+              </div>
+
+              <div
+                class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-[90%] text-sm text-gray-800 transform translate-y-0 opacity-100 transition-all duration-500 delay-100">
+                <p>No worries! You can retry securely here:</p>
+                <a href="#" class="text-blue-500 underline block mt-1 font-medium">tinko.in/pay/x8s9d</a>
+                <p class="text-[10px] text-gray-400 text-right mt-1">10:42 AM</p>
+              </div>
+            </div>
           </div>
-          <p class="text-xs text-slate-500 mt-2">Add this to your gateway's webhook settings.</p>
+
+          <p class="text-slate-400 text-xs mt-8 text-center max-w-xs">This is how your customers will see the recovery
+            message on WhatsApp.</p>
         </div>
+      </aside>
 
-        <div id="gatewayConfigContainer" class="space-y-6">
-          <!-- Dynamic Gateway Configs will appear here -->
-          <p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see configuration here.</p>
-        </div>
-      </div>
+      <script>
+        let currentStep = 1;
 
-      <!-- STEP 5: BRANDING -->
-      <div id="step-5" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Notifications & Branding</h1>
-        <p class="text-slate-400 mb-8">Customize how you appear to customers.</p>
+        function nextStep(step) {
+          // Hide all steps
+          document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
 
-        <div class="space-y-6">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Brand Name (Sender Name)</label>
-            <input type="text" id="brandName" class="input-field" placeholder="e.g. Acme Support"
-              oninput="updatePreview()">
-          </div>
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Support Email</label>
-            <input type="email" id="supportEmail" class="input-field" placeholder="support@acme.com">
-          </div>
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Reply-To Email</label>
-            <input type="email" id="replyToEmail" class="input-field" placeholder="same as support">
-          </div>
-        </div>
-      </div>
+          // Show target step
+          document.getElementById(`step-${step}`).classList.remove('hidden');
 
-      <!-- STEP 6: TEAMS -->
-      <div id="step-6" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Internal Team</h1>
-        <p class="text-slate-400 mb-8">Who should we alert for issues?</p>
+          // Update Sidebar
+          document.querySelectorAll('.step-item').forEach(el => {
+            el.classList.remove('active');
+          });
 
-        <div class="space-y-6">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Tech Contact Email</label>
-            <input type="email" id="techEmail" class="input-field">
-          </div>
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Finance Contact Email</label>
-            <input type="email" id="financeEmail" class="input-field">
-          </div>
-        </div>
-      </div>
+          const activeNav = document.getElementById(`nav-step-${step}`);
+          if (activeNav) activeNav.classList.add('active');
 
-      <!-- STEP 7: COMPLIANCE -->
-      <div id="step-7" class="step-content hidden">
-        <h1 class="text-3xl font-bold mb-2">Compliance & Access</h1>
-        <p class="text-slate-400 mb-8">Final details.</p>
+          // Update Mobile Header
+          const mobileStep = document.getElementById('mobile-step-num');
+          if (mobileStep) mobileStep.innerText = step;
 
-        <div class="space-y-6">
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">GST Number <span
-                class="text-slate-600">(Optional)</span></label>
-            <input type="text" id="gstNumber" class="input-field" placeholder="22AAAAA0000A1Z5">
-          </div>
-          <div>
-            <label class="block text-xs uppercase text-slate-500 font-bold mb-2">Billing Email</label>
-            <input type="email" id="billingEmail" class="input-field">
-          </div>
+          currentStep = step;
+        }
 
-          <div class="mt-6">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" id="termsCheck" class="accent-tinko-orange w-4 h-4">
-              <span class="text-sm text-slate-400">I agree to the <a href="../terms.html" target="_blank"
-                  class="text-tinko-orange hover:underline">Terms of Service</a> and <a href="../privacy-policy.html"
-                  target="_blank" class="text-tinko-orange hover:underline">Privacy Policy</a>.</span>
-            </label>
-          </div>
-        </div>
-      </div>
+        function toggleGateway(gw) {
+          const check = document.getElementById(`check-${gw}`).querySelector('div');
+          check.classList.toggle('hidden');
 
-    </div>
-  </div>
-
-  <!-- NAVIGATION BUTTONS (Fixed at bottom) -->
-  <div
-    class="fixed bottom-0 left-0 md:left-64 right-0 bg-slate-900 border-t border-slate-800 p-4 flex justify-between items-center z-50">
-    <button id="prevBtn" onclick="changeStep(-1)" class="text-slate-400 hover:text-white px-4 py-2 hidden">←
-      Back</button>
-    <button id="nextBtn" onclick="changeStep(1)"
-      class="bg-tinko-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg ml-auto">Next Step
-      →</button>
-  </div>
-
-  <script>
-    let currentStep = 1;
-    const totalSteps = 7;
-    const selectedGateways = new Set();
-    const GATEWAYS = ["Razorpay", "Stripe", "Cashfree", "PayU", "PhonePe", "Paytm", "CCAvenue", "Juspay", "Custom Gateway (Not listed here?)"];
-    let previewMode = 'whatsapp';
-
-    // ------------------------------------------------------
-    // INIT
-    // ------------------------------------------------------
-    document.addEventListener("DOMContentLoaded", () => {
-      renderGateways();
-      updatePreview();
-    });
-
-    function renderGateways() {
-      const container = document.getElementById("gatewayContainer");
-      GATEWAYS.forEach(gw => {
-        const btn = document.createElement("button");
-        btn.className = "pill-btn";
-        btn.textContent = gw;
-        btn.onclick = () => {
-          if (selectedGateways.has(gw)) {
-            selectedGateways.delete(gw);
-            btn.classList.remove("active");
+          // Visual feedback on parent
+          const parent = document.getElementById(`check-${gw}`).parentElement;
+          if (!check.classList.contains('hidden')) {
+            parent.classList.add('border-tinko-blue', 'bg-blue-50/30');
           } else {
-            selectedGateways.add(gw);
-            btn.classList.add("active");
+            parent.classList.remove('border-tinko-blue', 'bg-blue-50/30');
           }
-          renderGatewayConfig();
-        };
-        container.appendChild(btn);
-      });
-    }
-
-    function renderGatewayConfig() {
-      const container = document.getElementById("gatewayConfigContainer");
-      container.innerHTML = "";
-
-      // Add Documentation Link
-      const guideLink = document.createElement("div");
-      guideLink.className = "mb-6 text-right";
-      guideLink.innerHTML = `<a href="gateway-guide.html" target="_blank"
-        class="text-tinko-orange text-sm hover:underline flex items-center justify-end gap-2"><i
-          class="fas fa-book"></i> How to find these details?</a>`;
-      container.appendChild(guideLink);
-
-      if (selectedGateways.size === 0) {
-        container.innerHTML += '<p class="text-sm text-slate-500 italic">Select gateways in Step 2 to see configuration here.</p>';
-        return;
-      }
-
-      selectedGateways.forEach(gw => {
-        const div = document.createElement("div");
-        div.className = "bg-slate-800/50 p-4 rounded-lg border border-slate-700 mb-4";
-
-        if (gw === "Custom Gateway (Not listed here?)") {
-          div.innerHTML = `
-          <h3 class="font-bold text-white mb-3 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-gray-500"></div> Custom Gateway
-          </h3>
-          <div>
-            <label class="block text-xs text-slate-400 mb-1">Gateway Name & Details</label>
-            <textarea class="input-field text-sm" rows="3"
-              placeholder="e.g. Worldline, BillDesk. Please enter the name and we will contact you for integration."></textarea>
-          </div>
-          `;
-        } else {
-          div.innerHTML = `
-          <h3 class="font-bold text-white mb-3 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-green-500"></div> ${gw} Configuration
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Key ID / API Key</label>
-              <input type="password" class="input-field text-sm" placeholder="${gw} Key ID">
-            </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Key Secret</label>
-              <input type="password" class="input-field text-sm" placeholder="${gw} Secret">
-            </div>
-          </div>
-          <div class="mt-3 text-xs text-slate-500">
-            <p class="mb-1"><strong>Required Webhook Events:</strong></p>
-            <div class="flex gap-2 flex-wrap">
-              <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.failed</span>
-              <span class="bg-slate-900 px-2 py-1 rounded text-slate-300">payment.authorized</span>
-            </div>
-          </div>
-          `;
         }
-        container.appendChild(div);
-      });
-    }
 
-    // ------------------------------------------------------
-    // NAVIGATION
-    // ------------------------------------------------------
-    function changeStep(dir) {
-      // Validate current step before moving next
-      if (dir === 1 && !validateStep(currentStep)) return;
+        function toggleBtn(btn) {
+          const parent = btn.parentElement;
+          const buttons = parent.querySelectorAll('button');
 
-      const newStep = currentStep + dir;
-      if (newStep < 1 || newStep > totalSteps) {
-        if (newStep > totalSteps) submitForm();
-        return;
-      }
+          buttons.forEach(b => {
+            b.classList.remove('bg-tinko-blue', 'text-white', 'border-tinko-blue');
+            b.classList.add('bg-white', 'text-slate-500', 'border-slate-200');
+          });
 
-      // Hide current
-      document.getElementById(`step-${currentStep}`).classList.add("hidden");
-      document.getElementById(`nav-step-${currentStep}`).classList.replace("step-active", "step-inactive");
-
-      // Show new
-      document.getElementById(`step-${newStep}`).classList.remove("hidden");
-      document.getElementById(`nav-step-${newStep}`).classList.replace("step-inactive", "step-active");
-
-      currentStep = newStep;
-
-      // Button State
-      document.getElementById("prevBtn").classList.toggle("hidden", currentStep === 1);
-      document.getElementById("nextBtn").textContent = currentStep === totalSteps ? "Finish Setup" : "Next Step →";
-    }
-
-    function validateStep(step) {
-      if (step === 1) {
-        if (!document.getElementById("businessName").value) return alert("Business Name is required");
-      }
-      if (step === 2) {
-        if (selectedGateways.size === 0) return alert("Select at least one gateway");
-      }
-      if (step === 7) {
-        if (!document.getElementById("termsCheck").checked) return alert("Please accept Terms & Privacy Policy");
-      }
-      return true;
-    }
-
-    // ------------------------------------------------------
-    // PREVIEW LOGIC
-    // ------------------------------------------------------
-    function setPreviewMode(mode) {
-      previewMode = mode;
-
-      // Update Buttons
-      const btns = document.querySelectorAll('[onclick^="setPreviewMode"]');
-      btns.forEach(b => {
-        if (b.getAttribute('onclick').includes(mode)) {
-          b.className = "text-xs bg-slate-800 text-white px-3 py-1 rounded-full";
-        } else {
-          b.className = "text-xs text-slate-500 px-3 py-1 rounded-full hover:text-white";
+          btn.classList.remove('bg-white', 'text-slate-500', 'border-slate-200');
+          btn.classList.add('bg-tinko-blue', 'text-white', 'border-tinko-blue');
         }
-      });
 
-      // Update Content
-      const waContent = document.getElementById("waPreviewContent");
-      const emailContent = document.getElementById("emailPreviewContent");
-
-      if (waContent && emailContent) {
-        if (mode === 'whatsapp') {
-          waContent.classList.remove("hidden");
-          emailContent.classList.add("hidden");
-        } else {
-          waContent.classList.add("hidden");
-          emailContent.classList.remove("hidden");
+        function updatePreview() {
+          const name = document.getElementById('brandName').value;
+          document.getElementById('previewBrand').innerText = name || "Urban Kicks";
         }
-      }
-    }
 
-    function updatePreview() {
-      const name = document.getElementById("businessName").value || "Acme Store";
-      const brand = document.getElementById("brandName").value || name;
+        function finishSetup() {
+          // Simulate loading
+          const btn = document.querySelector('button[onclick="finishSetup()"]');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i> Setting up...';
+          btn.disabled = true;
 
-      // Update Text
-      document.querySelectorAll(".preview-business-name").forEach(el => el.textContent = name);
-      document.querySelectorAll(".preview-brand-name").forEach(el => el.textContent = brand);
-    }
-
-    function setDest(btn, val) {
-      document.getElementById("recoveryDest").value = val;
-      // Update UI
-      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    }
-
-    // ------------------------------------------------------
-    // SUBMIT
-    // ------------------------------------------------------
-    async function submitForm() {
-      const btn = document.getElementById("nextBtn");
-      btn.disabled = true;
-      btn.textContent = "Saving...";
-
-      const API_BASE = (() => {
-        const h = window.location.hostname;
-        if (!h || h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:8000";
-        return 'https://tinko-clean-backend.onrender.com';
-      })();
-
-      const payload = {
-        business_name: document.getElementById("businessName").value,
-        website: document.getElementById("websiteUrl").value,
-        industry: document.getElementById("industry").value,
-        business_size: document.getElementById("businessSize").value,
-
-        payment_gateways: Array.from(selectedGateways),
-        monthly_volume: document.getElementById("monthlyVolume").value,
-        monthly_gmv: document.getElementById("monthlyGmv").value,
-
-        recovery_channels: Array.from(document.querySelectorAll(".channel-check:checked")).map(c => c.value),
-        recovery_destination: document.getElementById("recoveryDest").value,
-
-        // Mock credentials collection (in real app, gather from inputs)
-        gateway_credentials: {},
-
-        brand_name: document.getElementById("brandName").value,
-        support_email: document.getElementById("supportEmail").value,
-        reply_to_email: document.getElementById("replyToEmail").value,
-
-        team_contacts: {
-          tech: document.getElementById("techEmail").value,
-          finance: document.getElementById("financeEmail").value
-        },
-
-        gst_number: document.getElementById("gstNumber").value,
-        billing_email: document.getElementById("billingEmail").value,
-
-        // Required by schema but not in form (auto-filled)
-        phone: "9999999999"
-      };
-
-      const token = localStorage.getItem("tinko_access_token");
-
-      try {
-        const res = await fetch(`${API_BASE}/v1/customer/onboarding`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          window.location.href = "index.html";
-        } else {
-          const d = await res.json();
-          alert("Error: " + (d.detail || "Setup failed"));
-          btn.disabled = false;
-          btn.textContent = "Finish Setup";
+          setTimeout(() => {
+            window.location.href = "dashboard-preview.html";
+          }, 1500);
         }
-      } catch (e) {
-        console.error(e);
-        alert("Network Error");
-        btn.disabled = false;
-      }
-    }
-  </script>
+      </script>
 </body>
 
 </html>

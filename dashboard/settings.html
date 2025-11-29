@@ -4,62 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Settings — Tinko</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { "tinko-orange": "#DE6B06", "tinko-dark": "#0b1220", "tinko-card": "#1e293b" },
-                    fontFamily: { jakarta: ['"Plus Jakarta Sans"', "sans-serif"] }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
-            background: #0f172a;
-            color: white;
-        }
-
-        .input-field {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            width: 100%;
-            outline: none;
-        }
-
-        .input-field:focus {
-            border-color: #DE6B06;
-        }
-
-        .pill-btn {
-            border: 1px solid #334155;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-
-        .pill-btn.active {
-            background: #DE6B06;
-            border-color: #DE6B06;
-            color: white;
-        }
-    </style>
-</head>
-
-<body class="min-h-screen p-4 md:p-8">
-
     <!-- HEADER -->
     <header class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
         <div class="flex items-center gap-4">
@@ -85,6 +29,50 @@
 
             <div id="gatewayConfigContainer" class="space-y-6">
                 <!-- Dynamic Configs -->
+            </div>
+
+            <!-- RECOVERY CHANNELS -->
+            <div class="mt-8 pt-8 border-t border-slate-700">
+                <h3 class="font-bold text-white mb-4">Recovery Channels</h3>
+                <p class="text-slate-400 text-sm mb-4">Select how Tinko should contact customers for recovery.</p>
+
+                <div class="space-y-3">
+                    <label
+                        class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-600 transition">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <div>
+                                <span class="font-semibold block">Email</span>
+                                <span class="text-xs text-slate-500">Send recovery links via email</span>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="channelEmail" class="w-5 h-5 accent-tinko-orange" checked>
+                    </label>
+
+                    <label
+                        class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-600 transition">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-comment-sms text-green-400"></i>
+                            <div>
+                                <span class="font-semibold block">SMS</span>
+                                <span class="text-xs text-slate-500">Send recovery links via SMS</span>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="channelSMS" class="w-5 h-5 accent-tinko-orange">
+                    </label>
+
+                    <label
+                        class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-600 transition">
+                        <div class="flex items-center gap-3">
+                            <i class="fab fa-whatsapp text-emerald-500"></i>
+                            <div>
+                                <span class="font-semibold block">WhatsApp</span>
+                                <span class="text-xs text-slate-500">Send recovery links via WhatsApp (Premium)</span>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="channelWhatsApp" class="w-5 h-5 accent-tinko-orange">
+                    </label>
+                </div>
             </div>
 
             <div class="mt-8 flex justify-end">
@@ -129,6 +117,14 @@
                 });
                 if (res.ok) {
                     const profile = await res.json();
+
+                    // Pre-select channels
+                    if (profile.recovery_channels) {
+                        document.getElementById("channelEmail").checked = profile.recovery_channels.includes("email");
+                        document.getElementById("channelSMS").checked = profile.recovery_channels.includes("sms");
+                        document.getElementById("channelWhatsApp").checked = profile.recovery_channels.includes("whatsapp");
+                    }
+
                     // In a real app, we would parse profile.payment_gateways and pre-select them
                     // For now, we start empty or default
                     renderGateways();
@@ -205,16 +201,43 @@
             btn.textContent = "Saving...";
             btn.disabled = true;
 
-            // In a real implementation, we would collect the keys and send them
-            // For now, we just simulate a success since the backend endpoint for partial update 
-            // is the same as onboarding and we don't want to overwrite everything with nulls.
-            // Ideally, we'd fetch the full profile, merge changes, and send it back.
+            // Collect Recovery Channels
+            const channels = [];
+            if (document.getElementById("channelEmail").checked) channels.push("email");
+            if (document.getElementById("channelSMS").checked) channels.push("sms");
+            if (document.getElementById("channelWhatsApp").checked) channels.push("whatsapp");
 
-            setTimeout(() => {
-                alert("Settings saved successfully!");
-                btn.textContent = "Save Changes";
-                btn.disabled = false;
-            }, 1000);
+            const token = localStorage.getItem("tinko_access_token");
+
+            try {
+                // We are using the onboarding endpoint which accepts partial updates
+                const res = await fetch(`${API_BASE}/v1/customer/onboarding`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify({
+                        // We only send what we want to update. 
+                        // Note: The backend schema might require other fields or be lenient.
+                        // Based on previous work, it updates the org.
+                        recovery_channels: channels
+                        // TODO: Also send gateway credentials here if we were implementing full gateway save
+                    })
+                });
+
+                if (res.ok) {
+                    alert("Settings saved successfully!");
+                } else {
+                    alert("Failed to save settings.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Network error saving settings.");
+            }
+
+            btn.textContent = "Save Changes";
+            btn.disabled = false;
         }
 
         async function confirmDelete() {
@@ -241,6 +264,6 @@
 
         document.addEventListener("DOMContentLoaded", loadSettings);
     </script>
-</body>
+    </body>
 
 </html>
